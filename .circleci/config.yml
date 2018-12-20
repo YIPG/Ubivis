@@ -1,29 +1,52 @@
 version: 2
 jobs:
-  deploy:
+  deploy-production:
     docker:
       - image: devillex/docker-firebase:latest
     working_directory: ~/workspace
     steps:
       - checkout
       - run:
-          name: install dependencies
+          name: yarn
           command: yarn
       - run:
-          name: build react
-          command: yarn build
+          name: yarn build
+          command: REACT_APP_PROJECT_ID="deploytest-5e1c6" yarn build
       - run:
-          name: firebase setting
+          name: select project
           command: firebase use deploytest-5e1c6 --token=$FIREBASE_DEPLOY_TOKEN
       - run:
           name: deploy firebase
           command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+  deploy-staging:
+    docker:
+      - image: devillex/docker-firebase:latest
+    working_directory: ~/workspace
+    steps:
+      - checkout
+      - run:
+          name: yarn
+          command: yarn
+      - run:
+          name: yarn build
+          command: REACT_APP_PROJECT_ID="ubivis-development" yarn build
+      - run:
+          name: select project
+          command: firebase use ubivis-development --token=$FIREBASE_DEPLOY_TOKEN_DEV
+      - run:
+          name: deploy firebase
+          command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN_DEV
+
 
 workflows:
   version: 2
   deploy:
     jobs:
-      - deploy:
+      - deploy-production:
           filters:
             branches:
               only: master
+      - deploy-staging:
+          filters:
+            branches:
+              only: development
