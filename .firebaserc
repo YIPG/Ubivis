@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "test": "deploytest-5e1c6",
+    "default": "deploytest-5e1c6"
+  }
+}
