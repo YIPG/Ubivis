@@ -13,6 +13,9 @@ jobs:
           name: build react
           command: yarn build
       - run:
+          name: firebase setting
+          command: firebase use deploytest-5e1c6 --token=$FIREBASE_DEPLOY_TOKEN
+      - run:
           name: deploy firebase
           command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
