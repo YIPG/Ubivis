@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: devillex/docker-firebase:latest
+    working_directory: ~/workspace
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: yarn
+      - run:
+          name: build react
+          command: yarn build
+      - run:
+          name: deploy firebase
+          command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
