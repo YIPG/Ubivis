@@ -1,4 +1,4 @@
-export const firebaseConfig = ((nodeEnv, projectId) => {
+const firebaseConfig = ((nodeEnv, projectId) => {
     if(nodeEnv === "production" && projectId === "deploytest-5e1c6"){
         return {
         apiKey: "AIzaSyDWpR2QDHRpX7qprsjTeBafWJa4R3WEM-I",
@@ -18,4 +18,6 @@ export const firebaseConfig = ((nodeEnv, projectId) => {
         messagingSenderId: "163624672759"
         }
     }
-}) (process.env.NODE_ENV, process.env.REACT_APP_PROJECT_ID)
+}) (process.env.NODE_ENV, process.env.REACT_APP_PROJECT_ID);
+
+export default firebaseConfig
