@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import LoginForm from '../container/LoginForm';
-// import Home from './containers/Home';
+import Home from '../container/Home';
 import WelcomeScreen from '../container/WelcomeScreen';
 // import UserMap from './containers/UserMap';
 // import WorkerMap from './containers/WorkersMap';
@@ -17,7 +17,7 @@ const Routes = () => {
             <div>
                 <Header />
                 <Switch>
-                    {/* <Route exact path='/' component={Home} /> */}
+                    <Route exact path='/' component={Home} />
                     <Route path='/login' component={LoginForm} />
                     <Route path='/welcome' component={WelcomeScreen} />
                     {/* <PrivateRoute path='/map' component={UserMap} />
