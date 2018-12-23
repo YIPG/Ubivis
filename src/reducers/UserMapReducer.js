@@ -3,7 +3,6 @@ import {
     ON_VIEWPORT_CHANGE,
     TRACK_USER_START
 } from '../actions/types';
-import { track_user_start } from '../actions';
 
 const INITIAL_STATE = {
     viewport: {

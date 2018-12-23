@@ -1,6 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import firebase from 'firebase';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,6 +13,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import * as Account_actions from '../../actions';
+import history from '../../Route/history';
 
 
 const styles = {
@@ -45,31 +44,28 @@ class ButtonAppBar extends React.Component {
     };
 
     handleToProfile = () => {
-        this.props.history.push('/profile')
+        history.push('/profile')
     }
 
     handleToLoginPage = () => {
-            // console.log("ログインボタンが押された！");
-            this.props.history.push('/login')
+        // console.log("ログインボタンが押された！");
+        history.push('/login')
     }
 
     handleToLogout = () => {
         // console.log("ログアウトボタンが押された！");
         this.props.actions.logoutUser()
-        this.props.history.push('/')
+        history.push('/')
     }
 
     render() {
-        const { classes, history, isLoggedIn, actions, user } = this.props;
-        const { auth, anchorEl } = this.state;
+        const { classes, user } = this.props;
+        const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
-
-        
 
         const handleToHome = () => {
             history.push('/')
         }
-
 
         return (
             <div className={classes.root}>
@@ -144,5 +140,5 @@ ButtonAppBar.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps )(
-    withRouter(withStyles(styles)(ButtonAppBar))
+    withStyles(styles)(ButtonAppBar)
 );

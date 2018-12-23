@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import firebase from 'firebase';
+import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import LoginForm from '../container/LoginForm';
 // import Home from './containers/Home';
@@ -11,7 +9,7 @@ import LoginForm from '../container/LoginForm';
 // import Choice from './containers/Choice';
 import Header from '../container/Header';
 import history from './history';
-import PrivateRoute from './PrivateRoute';
+// import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
     return (

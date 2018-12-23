@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, Route, Link, Redirect } from 'react-router-dom';
+import {  Route, Redirect } from 'react-router-dom';
 
 function PrivateRoute({ user, component: Component, ...rest }) {
   console.log("プライベート", user);
