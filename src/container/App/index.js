@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import firebaseConfig from '../../firebase/config';
 import Routes from '../../Route/Routes';
+import withRoot from '../../materialUI/withRoot';
 
 
 class App extends Component {
@@ -25,4 +26,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRoot(App);
