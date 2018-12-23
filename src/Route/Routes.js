@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import LoginForm from '../container/LoginForm';
 // import Home from './containers/Home';
-// import WelcomeScreen from './containers/WelcomeScreen';
+import WelcomeScreen from '../container/WelcomeScreen';
 // import UserMap from './containers/UserMap';
 // import WorkerMap from './containers/WorkersMap';
 // import MyPage from './containers/Mypage';
@@ -18,9 +18,9 @@ const Routes = () => {
                 <Header />
                 <Switch>
                     {/* <Route exact path='/' component={Home} /> */}
-                    <Route path='/' component={LoginForm} />
-                    {/* <Route path='/welcome' component={WelcomeScreen} />
-                    <PrivateRoute path='/map' component={UserMap} />
+                    <Route path='/login' component={LoginForm} />
+                    <Route path='/welcome' component={WelcomeScreen} />
+                    {/* <PrivateRoute path='/map' component={UserMap} />
                     <Route path='/workermap' component={WorkerMap} />
                     <Route path='/profile' component={MyPage} />
                     <Route path='/choice' component={Choice} /> */}
