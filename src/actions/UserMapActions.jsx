@@ -16,7 +16,6 @@ export const locate_user = () => {
     return(dispatch) => {
         getPosition()
             .then((position) => {
-                console.log(position.coords);
                 dispatch({ 
                     type: LOCATE_USER,
                     longitude: position.coords.longitude,

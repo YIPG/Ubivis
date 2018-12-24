@@ -14,6 +14,8 @@ const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 20,
+    paddingLeft: theme.spacing.unit ,
+    paddingRight: theme.spacing.unit
   },
   button: {
       marginTop: theme.spacing.unit * 3,
@@ -44,11 +46,11 @@ class Home extends React.Component {
     return (
       <div className={classes.root}>
         <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>インフラ周りは完成してます</DialogTitle>
+          <DialogTitle>大方は完成してます</DialogTitle>
           <DialogContent>
             <DialogContentText>
-                <div><Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>ログインページ</Link>や<Link to='/welcome' style={{ textDecoration: 'none', color: 'black' }}>ウェルカム画面</Link>にとんでみてください.</div>
-                <div>(現在は無効にしています)</div>
+                <div><Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>ログインページ</Link>や
+                <Link to='/welcome' style={{ textDecoration: 'none', color: 'black' }}>ウェルカム画面</Link>、<Link to='/map' style={{ textDecoration: 'none', color: 'black' }}>地図</Link>などにとんでみてください.</div>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -58,13 +60,13 @@ class Home extends React.Component {
           </DialogActions>
         </Dialog>
         <Typography variant="h4" gutterBottom>
-          ただいまメイン機能実装中です
+          ただいまマッチング機能を開発中です
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
           comming soon
         </Typography>
         <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>
-          実は...
+          でも...
         </Button>
       </div>
     );

@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Decode dotenv file
+          command: echo $ENV_FILE | base64 --decode > .env
+      - run:
           name: yarn
           command: yarn
       - run:
@@ -24,6 +27,9 @@ jobs:
     working_directory: ~/workspace
     steps:
       - checkout
+      - run:
+          name: Decode dotenv file
+          command: echo $ENV_FILE | base64 --decode > .env
       - run:
           name: yarn
           command: yarn

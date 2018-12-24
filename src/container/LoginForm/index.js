@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,40 +11,56 @@ import {
     loginUser
 } from '../../actions';
 
+const styles = theme => ({
+    progress : {
+        marginTop: theme.spacing.unit * 4
+    },
+    button : {
+        marginTop: theme.spacing.unit * 4
+    },
+    textform: {
+        margin: theme.spacing.unit 
+    }
+})
+
 class LoginForm extends Component {
     onEmailChange(text) {
         this.props.emailChanged(text.target.value);
     }
 
     onPasswordChange(text) {
-
         this.props.passwordChanged(text.target.value);
     }
 
     onButtonPress() {
         const { email, password} = this.props;
-
         this.props.loginUser({ email, password });
     }
 
+    onKeyDown(e){
+        if(e.key === 'Enter') this.onButtonPress()
+    }
+
     renderButton() {
+        
         if (this.props.loading) {
-            return <CircularProgress />;
+            return <CircularProgress size={30} className={this.props.classes.progress} color='secondary' />;
         }
 
         return (
             <Button
-                style={{ marginTop: 20 }}
+                className={this.props.classes.button}
                 variant='contained'
                 color='primary'
                 onClick={this.onButtonPress.bind(this)}
             >
-                送信
+                ログインまたは新規登録
             </Button>
         );
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <Grid
                 container
@@ -51,18 +68,19 @@ class LoginForm extends Component {
                 alignItems='center'
             >
                 <TextField
+                    className={classes.textform}
                     label='メールアドレス'
-                    onChange= {
-                        this.onEmailChange.bind(this)
-                    }
+                    onChange= {this.onEmailChange.bind(this)}
                     value={this.props.email}
                     autoFocus
                 />
                 <TextField
+                    className={classes.textform}
                     label='パスワード'
                     type='password'
                     onChange={this.onPasswordChange.bind(this)}
                     value={this.props.password}
+                    onKeyDown={this.onKeyDown.bind(this)}
                 />
                 {this.renderButton()}
             </Grid>
@@ -80,5 +98,5 @@ export default connect(mapStateToProps, {
     passwordChanged,
     loginUser
 })(
-    LoginForm
+    withStyles(styles)(LoginForm)
 );

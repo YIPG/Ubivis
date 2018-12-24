@@ -30,18 +30,16 @@ const styles = theme => ({
   });
 
 function getSteps() {
-    return ['性別', '年齢', '地域', 'プロフィール'];
+    return ['性別年齢', '地域', 'プロフィール'];
 }
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-        return <SexSelect />;
+        return <div><SexSelect /><AgeSelect /></div>;
         case 1:
-        return <AgeSelect />;
-        case 2:
         return <Region />;
-        case 3:
+        case 2:
         return <Prof />;
         default:
         return <Typography></Typography>;

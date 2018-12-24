@@ -35,7 +35,6 @@ class Region extends React.Component {
       });
 
       this.props.regionChanged(event.target.value);
-      console.log(this.props.region);
     };
   
     render() {

@@ -14,10 +14,11 @@ const styles = theme => ({
     flexWrap: 'wrap',
     minWidth: 300,
     width: '100%',
+    
   },
   image: {
     position: 'relative',
-    height: 200,
+    height: 400,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
