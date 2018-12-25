@@ -17,7 +17,7 @@ const styles = theme => ({
       marginRight: theme.spacing.unit,
     },
     buttonPosition: {
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing.unit * 3,
     },
     rootinst: {
       direction: 'column',
