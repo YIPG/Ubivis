@@ -36,10 +36,8 @@ function getSteps() {
 function getStepContent(step) {
     switch (step) {
         case 0:
-        return <div><SexSelect /><AgeSelect /></div>;
+        return <div><SexSelect /><AgeSelect /><Region /></div>;
         case 1:
-        return <Region />;
-        case 2:
         return <Prof />;
         default:
         return <Typography></Typography>;
