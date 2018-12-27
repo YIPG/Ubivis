@@ -182,7 +182,10 @@ class IntegrationReactSelect extends React.Component {
   };
 
   handleChange = value => {
-    this.props.regionChanged(value.label)
+    this.props.regionChanged(value.label);
+    this.setState({
+      single: value
+    })
   };
 
   render() {
