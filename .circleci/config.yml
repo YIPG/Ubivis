@@ -55,4 +55,4 @@ workflows:
       - deploy-staging:
           filters:
             branches:
-              only: development
+              ignore: master

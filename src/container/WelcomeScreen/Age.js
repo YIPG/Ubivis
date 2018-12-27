@@ -12,11 +12,12 @@ const styles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap',
-      justifyContent: 'center'
     },
     formControl: {
-      margin: theme.spacing.unit,
-      minWidth: 120,
+      margin: '0 auto',
+      minWidth: 150,
+      marginTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing.unit * 2
     },
     selectEmpty: {
       marginTop: theme.spacing.unit * 2,
