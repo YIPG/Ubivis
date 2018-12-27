@@ -11,6 +11,14 @@ const styles = theme => ({
     close: {
       padding: theme.spacing.unit / 2,
     },
+    nameform: {
+        marginTop:  theme.spacing.unit * 2,
+        width: 150,
+    },
+    textform: {
+        marginTop:  theme.spacing.unit * 5,
+        width: 300,
+    }
 });
 
 // const dropzoneStyle = {
@@ -104,6 +112,7 @@ class Prof extends Component {
 
     render() {
         // const {imgSrc} = this.state;
+        const { classes } = this.props;
 
         return (
             
@@ -123,12 +132,14 @@ class Prof extends Component {
                 </Dropzone> */}
                 
                 <TextField
+                    className={classes.nameform}
                     label='名前'
                     value={this.props.name}
                     onChange={this.onNameChange.bind(this)}
                     autoFocus
                 />
                 <TextField
+                    className={classes.textform}
                     id="outlined-multiline-flexible"
                     label='プロフィール'
                     multiline

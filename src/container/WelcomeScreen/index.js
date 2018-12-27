@@ -6,6 +6,7 @@ import SexSelect from './Sex';
 import AgeSelect from './Age';
 import Region from './Region';
 import Prof from './Profile';
+import Welcome from './Explanation';
 import history from '../../Route/history';
 import { sexChanged, ageChanged, regionChanged, profileFinish } from '../../actions';
 
@@ -17,7 +18,8 @@ const styles = theme => ({
       marginRight: theme.spacing.unit,
     },
     buttonPosition: {
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing.unit * 6,
+      marginButtom: theme.spacing.unit * 3,
     },
     rootinst: {
       direction: 'column',
@@ -30,14 +32,16 @@ const styles = theme => ({
   });
 
 function getSteps() {
-    return ['性別年齢', '地域', 'プロフィール'];
+    return ['ようこそ！', '性別年齢', 'プロフィール'];
 }
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-        return <div><SexSelect /><AgeSelect /><Region /></div>;
+        return <Welcome />;
         case 1:
+        return <div><SexSelect /><AgeSelect /><Region /></div>;
+        case 2:
         return <Prof />;
         default:
         return <Typography></Typography>;
