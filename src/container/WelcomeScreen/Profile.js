@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import Dropzone from 'react-dropzone';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import CameraAlt from '@material-ui/icons/CameraAlt';
 import { nameChanged, profileChanged, snackChanged, profileImageChanged } from '../../actions';
 import SimpleSnackbar from '../../components/SimpleSnackbar';
 
@@ -18,15 +20,25 @@ const styles = theme => ({
     textform: {
         marginTop:  theme.spacing.unit * 5,
         width: 300,
-    }
+    },
+    inputZone : {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 160,
+        height: 160,
+        margin: 20,
+        border: `2px dashed ${theme.palette.grey[400]}`
+    },
+    icon: {
+        fontSize: 80,
+        color: theme.palette.grey[500]
+      },
+    font: {
+        color: theme.palette.grey[500]
+    },
 });
-
-// const dropzoneStyle = {
-//     width: 160,
-//     height: 160,
-//     margin: 20,
-//     border: '2px dashed #ccc'
-// }
 
 // const onImageDropzoneStyle = {
 //     width: 500,
@@ -130,6 +142,11 @@ class Prof extends Component {
                     {imgSrc !== null ? <img alt='' style={imageStyle} src={imgSrc} />: ''}
                 </div>
                 </Dropzone> */}
+                <label className={classes.inputZone}>
+                    <CameraAlt className={classes.icon} />
+                    <Typography variant="caption" className={classes.font}>必須</Typography>
+                    <input type="file" accept="image/*"　style={{display: 'none'}} />
+                </label>
                 
                 <TextField
                     className={classes.nameform}

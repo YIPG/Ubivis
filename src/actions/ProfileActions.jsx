@@ -29,6 +29,7 @@ export const ageChanged = (age) => {
 };
 
 export const regionChanged = (text) => {
+    console.log(text)
     return {
         type: REGION_CHANGED,
         payload: text
@@ -66,6 +67,9 @@ export const snackChanged = (text) => {
 // Cloud Storage保存
 
 const imageUploaded = (dispatch, file) => {
+    if(file === null){
+        dispatch({ type: IMAGE_UPLOADED });
+    } else {
     console.log(file);
     const { currentUser } = firebase.auth();
     const storageRef = firebase.storage().ref();
@@ -74,7 +78,6 @@ const imageUploaded = (dispatch, file) => {
     const profImageRef = imageRef.child(`${file.name}`);
     const uploadTask = profImageRef.put(file)
 
-    // MU31cFNKW9Y88CfvWczxFCurTzD3/imeges/profile.jpg
     console.log(profImageRef.fullPath);
 
 
@@ -128,7 +131,7 @@ const imageUploaded = (dispatch, file) => {
 
                 
                 
-            
+    }            
 }
 
 export const profileFinish = ({ male, age, region, name, profile, profileImage }) => {
@@ -137,7 +140,7 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
     return(dispatch) => {
         const db = firebase.firestore();
 
-        console.log(profileImage);
+        console.log(male, age, region, name, profile, profileImage);
 
         imageUploaded(dispatch, profileImage);
 
@@ -146,7 +149,7 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
         })
         
         db.collection('users').doc(currentUser.uid).set({
-            sex: male ? 'male':'female',
+            male: male,
             age: age,
             region: region,
             name: name,
@@ -156,7 +159,6 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
             console.log("データ格納成功");
             dispatch({ type: PROFILE_FINISH });
         });
-        
     }
 }
 

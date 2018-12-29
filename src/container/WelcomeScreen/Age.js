@@ -23,6 +23,8 @@ const styles = theme => ({
       marginTop: theme.spacing.unit * 2,
     },
   });
+
+let age_list = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
   
 class AgeSelects extends React.Component {
     state = {
@@ -41,6 +43,9 @@ class AgeSelects extends React.Component {
 
     render() {
         const { classes } = this.props;
+        let options = age_list.map(age => {
+            return <option key={age} value={age}>{age}</option>
+        } )
 
         return (
             <div className={classes.root}>
@@ -57,13 +62,8 @@ class AgeSelects extends React.Component {
                     }}
                 >
                     <option value="" />
-                    <option value={0}>18~20歳</option>
-                    <option value={1}>21~23歳</option>
-                    <option value={2}>24~26歳</option>
-                    <option value={3}>27~30歳</option>
-                    <option value={4}>31~33歳</option>
-                    <option value={5}>34~36歳</option>
-                    <option value={6}>37~40歳</option>
+                    {options}
+                    
                 </Select>
                 </FormControl>
             </div>

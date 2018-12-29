@@ -15,7 +15,7 @@ import {
   
 const INITIAL_STATE = {
     male: true,
-    age: '',
+    age: 0,
     region: '東京都',
     name: '',
     profile: '',

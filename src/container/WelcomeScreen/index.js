@@ -12,7 +12,10 @@ import { sexChanged, ageChanged, regionChanged, profileFinish } from '../../acti
 
 const styles = theme => ({
     root: {
-      width: '100%',
+      width: '100%'
+    },
+    stepper: {
+      backgroundColor: theme.palette.grey[50]
     },
     button: {
       marginRight: theme.spacing.unit,
@@ -140,7 +143,7 @@ class WelcomeScreen extends React.Component {
   
       return (
         <div className={classes.root}>
-          <Stepper activeStep={activeStep}>
+          <Stepper className={classes.stepper} activeStep={activeStep}>
             {steps.map((label, index) => {
               const props = {};
               const labelProps = {};
