@@ -138,11 +138,16 @@ class WelcomeScreen extends React.Component {
 
     // 必須項目の設定
     isButtonDisabled(activestep, steps){
-      const{ profileImage } = this.props;
+      const{ profileImage, age, region } = this.props;
 
       if(activestep === steps.length - 1){
         return profileImage === null
       };
+
+      if(activestep === 1){
+        return age === 0 || region === ''
+      }
+      
       return false
     }
   
