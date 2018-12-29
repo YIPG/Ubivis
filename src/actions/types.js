@@ -6,7 +6,6 @@ export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const LOGOUT_USER_SUCCESS = 'logout_user_success';
 export const LOGOUT_USER_FAIL = 'logout_user_fail';
-export const FETCH_LOGIN_STATE = 'fetch_login_state';
 
 export const SEX_CHANGED = 'sex_changed';
 export const AGE_CHANGED = 'age_changed';

@@ -7,21 +7,9 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAIL,
-    FETCH_LOGIN_STATE
+    LOGOUT_USER_FAIL
 } from './types';
 import history from '../Route/history';
-
-export const fetchLoginState = () => {
-    return (dispatch) => {
-        const user = firebase.auth().currentUser;
-
-        dispatch({
-            type: FETCH_LOGIN_STATE,
-            payload: user
-        })   
-    }
-}
 
 export const emailChanged = (text) => {
     return {
@@ -41,13 +29,9 @@ export const loginUser = ({ email, password }) => {
     return (dispatch) => {
         dispatch({ type: LOGIN_USER });
 
-        console.log(email);
-
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => loginUserSuccess(dispatch, user))
             .catch((error) => {
-                console.log(error);
-
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(user => loginUserSuccess(dispatch, user))
                     .catch(() => loginUserFail(dispatch));

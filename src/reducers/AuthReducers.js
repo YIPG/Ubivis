@@ -6,8 +6,7 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAIL,
-    FETCH_LOGIN_STATE
+    LOGOUT_USER_FAIL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -37,8 +36,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE, isLoggedIn: false };
         case LOGOUT_USER_FAIL:
             return { ...state, error: 'Logout Failed.', loading: false };
-        case FETCH_LOGIN_STATE:
-            return { ...state, user: action.payload };
         default:
             return state;
     }

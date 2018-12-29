@@ -135,6 +135,16 @@ class WelcomeScreen extends React.Component {
     isStepSkipped(step) {
       return this.state.skipped.has(step);
     }
+
+    // 必須項目の設定
+    isButtonDisabled(activestep, steps){
+      const{ profileImage } = this.props;
+
+      if(activestep === steps.length - 1){
+        return profileImage === null
+      };
+      return false
+    }
   
     render() {
       const { classes } = this.props;
@@ -203,10 +213,11 @@ class WelcomeScreen extends React.Component {
                   </Grid>
                   <Grid item>
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       onClick={activeStep === steps.length - 1 ? this.handleFinish : this.handleNext}
                       className={classes.button}
+                      disabled={this.isButtonDisabled(activeStep, steps)}
                     >
                       {activeStep === steps.length - 1 ? '終了' : '次へ'}
                     </Button>

@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import Dropzone from 'react-dropzone';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import CameraAlt from '@material-ui/icons/CameraAlt';
-import { nameChanged, profileChanged, snackChanged, profileImageChanged } from '../../actions';
-import SimpleSnackbar from '../../components/SimpleSnackbar';
+import { nameChanged, profileChanged, profileImageChanged } from '../../actions';
 
 const styles = theme => ({
-    close: {
-      padding: theme.spacing.unit / 2,
-    },
     nameform: {
         marginTop:  theme.spacing.unit * 2,
         width: 150,
@@ -28,8 +23,32 @@ const styles = theme => ({
         alignItems: 'center',
         width: 160,
         height: 160,
-        margin: 20,
+        margin: '20px 0',
         border: `2px dashed ${theme.palette.grey[400]}`
+    },
+    inputZoneIntro: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    inputZoneOnImage : {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 160,
+        height: 160,
+        margin: '20px 0',
+        border: `1px ${theme.palette.grey[400]}`
+    },
+    imageZone : {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // width: 160,
+        height: 160,
     },
     icon: {
         fontSize: 80,
@@ -40,112 +59,41 @@ const styles = theme => ({
     },
 });
 
-// const onImageDropzoneStyle = {
-//     width: 500,
-//     height: 160,
-//     margin: 20,
-//     border: 'none',
-//     textAlign: 'center'
-// }
-
-// const imageStyle = {
-//     height: 160
-// }
-
-const maxImageSize=5242880; //5MB
-
 class Prof extends Component {
-    constructor() {
-        super()
-        this.state = {
-          accepted: [],
-          rejected: [],
-          imgSrc: null
-        }
-    }
-
-    onUpload = (accepted, rejected) => {
-        accepted.forEach(f => {
-          this.props.imageUploaded(f);
-        });
-    };
-
-    verifyFile = (files) => {
-        if(files && files.length>0){
-            const currentFile = files[0];
-            const currentFileType = currentFile.type;
-            const currentFileSize = currentFile.size;
-            if ((currentFileType !== "image/jpeg") && (currentFileType !== "image/png")){
-                this.props.snackChanged('アップロードできるファイルはjpeg形式もしくはpng形式のみです。');
-                console.log(currentFileType);
-                return <SimpleSnackbar />
-            }
-            if(currentFileSize > maxImageSize){
-                this.props.snackChanged('ファイル容量が大きすぎます。上限は5MBです。');
-                return <SimpleSnackbar />
-            }
-        }
-    }
-
-
-    handleOnDrop = (files, rejected) => {
-        this.props.profileImageChanged(files[0]);
-
-        if(rejected && rejected.length > 0){
-            this.props.snackChanged('対応していないファイルです。');
-            return <SimpleSnackbar />
-        }
-
-        if(files && files.length > 0){
-            this.verifyFile(files);
-
-            const currentFile = files[0];
-            const reader = new FileReader();
-
-            reader.addEventListener('load', ()=>{
-                
-                this.setState({
-                    imgSrc: reader.result
-                })
-            }, false);
-            reader.readAsDataURL(currentFile);
-        }
-    }
-
-
     onNameChange(text) {
         this.props.nameChanged(text.target.value);
     }
 
     onProfileChange(text) {
         this.props.profileChanged(text.target.value)
+    }
 
+    handleChange(e){
+        const files = e.target.files;
+        if(files.length !== 0) {
+            this.props.profileImageChanged(files[0])
+        }
     }
 
     render() {
-        // const {imgSrc} = this.state;
-        const { classes } = this.props;
+        const { classes, profileImage } = this.props;
+        let img_src = profileImage === null ? "" : URL.createObjectURL(profileImage);
 
         return (
-            
             <Grid
                 container
                 direction='column'
                 alignItems='center'
             >
-                {/* <Dropzone
-                    style={imgSrc!==null ? onImageDropzoneStyle: dropzoneStyle}
-                    accept="image/*"
-                    onDrop={this.handleOnDrop}
-                >
-                <div>
-                    {imgSrc !== null ? <img alt='' style={imageStyle} src={imgSrc} />: ''}
-                </div>
-                </Dropzone> */}
-                <label className={classes.inputZone}>
-                    <CameraAlt className={classes.icon} />
-                    <Typography variant="caption" className={classes.font}>必須</Typography>
-                    <input type="file" accept="image/*"　style={{display: 'none'}} />
+                <label className={profileImage===null?classes.inputZone:classes.inputZoneOnImage}>
+                    {profileImage === null ? 
+                        <div className={classes.inputZoneIntro}>
+                        <CameraAlt className={classes.icon} />
+                        <Typography variant="caption" className={classes.font}>必須</Typography>
+                        </div>:
+                        <img className={classes.imageZone} alt="" src={img_src} />
+                    }
+                    <input type="file" accept="image/*" onChange={this.handleChange.bind(this)}　style={{display: 'none'}} />
                 </label>
                 
                 <TextField
@@ -168,14 +116,12 @@ class Prof extends Component {
                     helperText="例:ギターが好きです！身長は170cmです！"
                     variant="outlined"
                 />
-                
             </Grid>
         );
     }
 }
 
 const mapStateToProps = state => {
-    // console.log(state.auth)
     return state.profile;
 };
 
@@ -183,7 +129,6 @@ export default withStyles(styles)(
     connect(mapStateToProps, {
         nameChanged,
         profileChanged,
-        snackChanged,
         profileImageChanged
     })(
         Prof
