@@ -23,3 +23,7 @@ export const TRACK_USER_START = 'track_user_start';
 export const PROFILE_GET = "profile_get";
 export const PROFILE_GET_SUCCESS = 'profile_get_success';
 export const PROFILE_GET_FAIL = 'profile_get_fail';
+
+export const FETCH_USER_LIST = 'fetch_user_list';
+export const FETCH_USER_LIST_SUCCESS = 'fetch_user_list_success';
+export const FETCH_USER_LIST_FAIL = 'fetch_user_list_fail';
