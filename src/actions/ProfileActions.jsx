@@ -162,15 +162,13 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
     }
 }
 
-export const profileGet = () => {
-    const { currentUser } = firebase.auth();
-
+export const profileGet = (uid) => {
     return(dispatch) => {
         dispatch({
             type:PROFILE_GET
         });
 
-        firebase.firestore().collection('users').doc(currentUser.uid).get()
+        firebase.firestore().collection('users').doc(uid).get()
             .then(doc => {
                 if(doc.exists){
                     profileGetSuccess(dispatch, doc.data())

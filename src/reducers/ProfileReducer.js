@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     profImage: false,
     profileImage: null,
     snack: '',
-    mypageProfile: null,
+    targetProfile: null,
     loading: true
 };
   
@@ -49,7 +49,7 @@ export default (state = INITIAL_STATE, action) => {
         case PROFILE_GET:
         return {...state, loading:true};
         case PROFILE_GET_SUCCESS:
-        return {...state, loading: false, mypageProfile: action.payload};
+        return {...state, loading: false, targetProfile: action.payload};
         case PROFILE_GET_FAIL:
         return {...state, loading:true}
         default:
