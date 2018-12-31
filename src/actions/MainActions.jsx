@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import db from '../firebase/firestore';
 import {
     FETCH_USER_LIST,
     FETCH_USER_LIST_SUCCESS,
@@ -12,7 +11,7 @@ export const fetchUserList = (male) => {
             type: FETCH_USER_LIST
         });
 
-        db.collection(users).where('male', '==', !male)
+        firebase.firestore().collection('users').where('male', '==', !male)
             .get()
             .then(querySnapshot =>{
                 querySnapshot.forEach(doc => fetchUserListSuccess(dispatch, doc))

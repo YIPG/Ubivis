@@ -6,9 +6,9 @@ import reducer from '../reducers';
 
 // 永続化の設定
 const persistConfig = {
-    key: 'auth', // Storageに保存されるキー名を指定する
+    key: 'root', // Storageに保存されるキー名を指定する
     storage, // 保存先としてlocalStorageがここで設定される
-    whitelist: ['auth'] // Stateは`auth`のみStorageに保存する
+    whitelist: ['auth'] // Stateは`auth`と'profile'のみStorageに保存する
     // blacklist: ['visibilityFilter'] // `visibilityFilter`は保存しない
   }
 

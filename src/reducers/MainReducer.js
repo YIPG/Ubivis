@@ -23,5 +23,7 @@ export default (state = INITIAL_STATE, action) => {
             ]}
         case FETCH_USER_LIST_FAIL:
             return {...state, loading:false}
+        default:
+            return state
     }
 }

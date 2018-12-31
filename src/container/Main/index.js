@@ -1,45 +1,67 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ImgMediaCard from './Card';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
+import UserCard from '../../components/Card';
 import {
     fetchUserList
 } from '../../actions';
 
+const styles = theme => ({
+    progress: {
+        marginTop: theme.spacing.unit * 4
+    }
+})
+
 class Main extends React.Component {
     componentDidMount() {
-        this.props.fetchUserList(male)
+        this.props.fetchUserList(this.props.male)
     }
 
-    // renderCard(){
-    //     const {fetchUserList} = main;
-    //     return fetchUserList.map(fetchedUser =>  {
-    //         return (
-    //             <li
-                
-    //             >
-    //                 none
-    //             </li>
-    //         )
-    //     })
-    // }
+    renderCard(){
+        const {classes} = this.props;
+        const {fetchUserList, loading} = this.props.main;
+
+        if(loading){
+            return <CircularProgress className={classes.progress} size={30} color="secondary" />
+        }
+        return fetchUserList.map(fetchedUser =>  {
+            // console.log(fetchedUser);
+            return (
+                <li
+                    key={fetchedUser.id}
+                >
+                {fetchUserList.data.name}
+                    {/* <UserCard
+                        name={fetchUserList.data.name}
+                        profile={fetchUserList.data.profile}
+                        img_src={fetchUserList.data.profileImageURL} */}
+                    />
+                </li>
+            )
+        })
+    }
 
     render(){
-        const {fetchUserList} = main ;
         return(
             <div>
-                {/* fetchUserList.forEach(fetchedUser => {
-                    <ImgMediaCard targetUid={fetchedUser.id} />
-                }); */}
+                <ul>
+                    {this.renderCard()}
+                </ul>
             </div>
         )
     }
 }
 
-// const mapStateToProps = state => ({
-//     male: state.profile.male,
-//     fetchedUserList: state.main.
-// });
+const mapStateToProps = state => {
+    return ({
+        male: state.profile.male,
+        main: state.main
+    })
+}
 
 export default connect(mapStateToProps, {
     fetchUserList
-})(Main);
+})(
+    withStyles(styles)(Main)
+);
