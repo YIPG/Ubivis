@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import _ from 'lodash';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import UserCard from '../../components/Card';
@@ -25,17 +26,16 @@ class Main extends React.Component {
         if(loading){
             return <CircularProgress className={classes.progress} size={30} color="secondary" />
         }
-        return fetchUserList.map(fetchedUser =>  {
-            // console.log(fetchedUser);
+        return _.map(fetchUserList,fetchedUser =>  {
+            console.log(fetchedUser);
             return (
                 <li
                     key={fetchedUser.id}
                 >
-                {fetchUserList.data.name}
-                    {/* <UserCard
-                        name={fetchUserList.data.name}
-                        profile={fetchUserList.data.profile}
-                        img_src={fetchUserList.data.profileImageURL} */}
+                    <UserCard
+                        name={fetchedUser.data.name}
+                        profile={fetchedUser.data.profile}
+                        img_src={fetchedUser.data.profileImageURL}
                     />
                 </li>
             )
