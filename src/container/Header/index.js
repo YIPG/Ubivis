@@ -103,6 +103,7 @@ class ButtonAppBar extends React.Component {
                 <List>
                     <ListItemLink to='/welcome' primary='ウェルカム' />
                     <ListItemLink to='/map' primary='地図' />
+                    <ListItemLink to='/main' primary='メインβ' />
                 </List>
             </div>
         );
