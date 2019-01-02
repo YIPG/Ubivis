@@ -4,6 +4,7 @@ import LoginForm from '../container/LoginForm';
 import Home from '../container/Home';
 import WelcomeScreen from '../container/WelcomeScreen';
 import UserMap from '../container/UserMap';
+import Main from '../container/Main';
 // import WorkerMap from './containers/WorkersMap';
 // import MyPage from './containers/Mypage';
 // import Choice from './containers/Choice';
@@ -21,6 +22,7 @@ const Routes = () => {
                     <Route path='/login' component={LoginForm} />
                     <PrivateRoute path='/welcome' component={WelcomeScreen} />
                     <Route path='/map' component={UserMap} />
+                    <Route path='/main' component={Main} />
                     {/* <Route path='/workermap' component={WorkerMap} />
                     <Route path='/profile' component={MyPage} />
                     <Route path='/choice' component={Choice} /> */}

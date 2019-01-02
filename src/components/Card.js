@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,9 +12,6 @@ import Slide from '@material-ui/core/Slide';
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import LocationOn from '@material-ui/icons/LocationOn';
-import {
-  profileGet
-} from '../../actions';
 
 
 const styles = theme =>  ({
@@ -43,22 +39,20 @@ const styles = theme =>  ({
   dislike: {
     marginLeft: 'auto',
     marginRight: '8px'
+  },
+  multiLine: {
+      whiteSpace: 'pre-line',
   }
 });
 
-class ImgMediaCard extends React.Component {
+class UserCard extends React.Component {
   state = {
     expanded: false,
     checked: true,
   };
 
-  componentDidMount () {
-    this.props.profileGet(this.props.targetUid);
-  }
-
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
-    console.log(this.props.profile.targetProfile);
   };
 
   handleSlideClick = () => {
@@ -69,9 +63,7 @@ class ImgMediaCard extends React.Component {
   };
 
   render(){
-    const { classes } = this.props;
-    // const imageSrc = firebase.firestore().collection("users").doc(this.props.auth.user.uid)
-    const { targetProfile, loading } = this.props.profile;
+    const { classes, img_src, name, profile } = this.props;
 
     return (
       <Grid container justify='center'>
@@ -83,20 +75,20 @@ class ImgMediaCard extends React.Component {
               alt="Contemplative Reptile"
               className={classes.media}
               height="300"
-              src= {loading? "": targetProfile.profileImageURL}
+              src= {img_src}
               title="Contemplative Reptile"
             />
             <CardContent className={classes.content}>
               <Typography className={classes.name} variant="h5" component="h2">
-               {loading? "": targetProfile.name}
+               {name}
               </Typography>
             </CardContent>
           </CardActionArea>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <LocationOn />
-              <Typography paragraph>
-                {loading? "": targetProfile.profile}
+              <Typography className={classes.multiLine} component='p'>
+                {profile}
               </Typography>
             </CardContent>
           </Collapse>
@@ -115,15 +107,8 @@ class ImgMediaCard extends React.Component {
   }
 }
 
-ImgMediaCard.propTypes = {
+UserCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-  // console.log(state.auth)
-  return state;
-};
-
-export default withStyles(styles)(connect(mapStateToProps,{
-  profileGet
-} )(ImgMediaCard));
+export default withStyles(styles)(UserCard);
