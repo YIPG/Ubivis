@@ -1,5 +1,4 @@
 import React from 'react';
-import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -24,16 +23,6 @@ const styles = theme => ({
 });
 
 class Home extends React.Component {
-  componentDidMount(){
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log(user)
-      } else {
-        // No user is signed in.
-      }
-    });
-}
-
   state = {
     open: false,
   };

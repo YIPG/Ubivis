@@ -9,11 +9,19 @@ import {
 } from '../../actions';
 
 const styles = theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    ul:{
+        paddingLeft: '0'
+    },
     progress: {
-        marginTop: theme.spacing.unit * 4
+        marginTop: theme.spacing.unit * 20
     },
     list: {
         listStyleType: "none",
+        margin: '8px'
     }
 })
 
@@ -29,7 +37,7 @@ class Main extends React.Component {
         console.log("renderが呼ばれた")
 
         if(loading){
-            return <CircularProgress className={classes.progress} size={30} color="secondary" />
+            return <CircularProgress className={classes.progress} size={60} />
         }
         return _.map(fetchUserList,fetchedUser =>  {
             return (
@@ -48,9 +56,10 @@ class Main extends React.Component {
     }
 
     render(){
+        const {classes} = this.props;
         return(
-            <div>
-                <ul>
+            <div className={classes.root}>
+                <ul className={classes.ul}>
                     {this.renderCard()}
                 </ul>
             </div>

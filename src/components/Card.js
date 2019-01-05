@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
 import Collapse from '@material-ui/core/Collapse';
-import Grid from '@material-ui/core/Grid';
 import LocationOn from '@material-ui/icons/LocationOn';
 
 
@@ -66,43 +65,43 @@ class UserCard extends React.Component {
     const { classes, img_src, name, profile } = this.props;
 
     return (
-      <Grid container justify='center'>
-      <Slide direction="right" in={this.state.checked} unmountOnExit>
-        <Card className={classes.card}>
-          <CardActionArea onClick={this.handleExpandClick}>
-            <CardMedia
-              component="img"
-              alt="読み込み中です"
-              className={classes.media}
-              height="300"
-              src= {img_src}
-              title="Contemplative Reptile"
-            />
-            <CardContent className={classes.content}>
-              <Typography className={classes.name} variant="h5" component="h2">
-               {name}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <LocationOn />
-              <Typography className={classes.multiLine} component='p'>
-                {profile}
-              </Typography>
-            </CardContent>
-          </Collapse>
-          <CardActions className={classes.actions} disableActionSpacing>
-            <Button　onClick={this.handleCallClick} className={classes.like} size="small" color="primary">
-              この人を呼ぶ
-            </Button>
-            <Button onClick={this.handleSlideClick} className={classes.dislike} size="small" color="primary">
-              違う人を呼ぶ
-            </Button>
-          </CardActions>
-        </Card>
-      </Slide>
-      </Grid>
+      <div>
+        <Slide direction="right" in={this.state.checked} unmountOnExit>
+          <Card className={classes.card}>
+            <CardActionArea onClick={this.handleExpandClick}>
+              <CardMedia
+                component="img"
+                alt="読み込み中です"
+                className={classes.media}
+                height="300"
+                src= {img_src}
+                title="Contemplative Reptile"
+              />
+              <CardContent className={classes.content}>
+                <Typography className={classes.name} variant="h5" component="h2">
+                {name}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <LocationOn />
+                <Typography className={classes.multiLine} component='p'>
+                  {profile}
+                </Typography>
+              </CardContent>
+            </Collapse>
+            <CardActions className={classes.actions} disableActionSpacing>
+              <Button　onClick={this.handleCallClick} className={classes.like} size="small" color="primary">
+                この人を呼ぶ
+              </Button>
+              <Button onClick={this.handleSlideClick} className={classes.dislike} size="small" color="primary">
+                違う人を呼ぶ
+              </Button>
+            </CardActions>
+          </Card>
+        </Slide>
+      </div>
     );
   }
 }
