@@ -3,6 +3,8 @@ import {
     AGE_CHANGED,
     REGION_CHANGED,
     PROFILE_FINISH,
+    PROFILE_FINISH_SUCCESS,
+    PROFILE_FINISH_FAIL,
     IMAGE_UPLOADED,
     NAME_CHANGED,
     PROFILE_CHANGED,
@@ -21,39 +23,54 @@ const INITIAL_STATE = {
     profile: '',
     profImage: false,
     profileImage: null,
+    profileImageURL: "",
     snack: '',
     targetProfile: null,
-    loading: true
+    loading: true,
+    updateLoading: false
 };
   
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SEX_CHANGED:
-        return { ...state, male: action.payload };
+           return { ...state, male: action.payload };
         case AGE_CHANGED:
-        return { ...state, age: action.payload };
+           return { ...state, age: action.payload };
         case REGION_CHANGED:
-        return { ...state, region: action.payload };
+           return { ...state, region: action.payload };
         case NAME_CHANGED:
-        return { ...state, name: action.payload };
+           return { ...state, name: action.payload };
         case PROFILE_CHANGED:
-        return { ...state, profile: action.payload };
+           return { ...state, profile: action.payload };
         case PROFILEIMAGE_CHANGED:
-        return { ...state, profileImage: action.payload };
+           return { ...state, profileImage: action.payload };
         case SNACK_CHANGED:
-        return { ...state, snack: action.payload };
+           return { ...state, snack: action.payload };
         case IMAGE_UPLOADED:
-        return { ...state, profImage: true };
+           return { ...state, profImage: true };
         case PROFILE_FINISH:
-        return state;
+           return {...state, updateLoading: true};
+        case PROFILE_FINISH_SUCCESS:
+           return {...state, updateLoading: false};
+        case PROFILE_FINISH_FAIL:
+           return {...state, updateLoading: true};
         case PROFILE_GET:
-        return {...state, loading:true};
+           return {...state, loading:true};
         case PROFILE_GET_SUCCESS:
-        return {...state, loading: false, targetProfile: action.payload};
+           return {
+                ...state,
+                loading: false,
+                name: action.payload.name,
+                profile: action.payload.profile,
+                profileImageURL: action.payload.profileImageURL,
+                male: action.payload.male,
+                age: action.payload.age,
+                region: action.payload.region,
+            };
         case PROFILE_GET_FAIL:
-        return {...state, loading:true}
+           return {...state, loading:true}
         default:
-        return state;
+           return state;
     }
 };
   

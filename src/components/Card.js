@@ -72,7 +72,7 @@ class UserCard extends React.Component {
           <CardActionArea onClick={this.handleExpandClick}>
             <CardMedia
               component="img"
-              alt="Contemplative Reptile"
+              alt="読み込み中です"
               className={classes.media}
               height="300"
               src= {img_src}

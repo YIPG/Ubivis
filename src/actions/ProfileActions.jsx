@@ -4,6 +4,8 @@ import {
     AGE_CHANGED,
     REGION_CHANGED,
     PROFILE_FINISH,
+    PROFILE_FINISH_SUCCESS,
+    PROFILE_FINISH_FAIL,
     IMAGE_UPLOADED,
     NAME_CHANGED,
     PROFILE_CHANGED,
@@ -67,19 +69,15 @@ export const snackChanged = (text) => {
 // Cloud Storage保存
 
 const imageUploaded = (dispatch, file) => {
-    if(file === null){
+    if(Object.keys(file).length === 0){
         dispatch({ type: IMAGE_UPLOADED });
     } else {
-    console.log(file);
     const { currentUser } = firebase.auth();
     const storageRef = firebase.storage().ref();
     const userRef = storageRef.child(`${currentUser.uid}`);
     const imageRef = userRef.child('images');
     const profImageRef = imageRef.child(`${file.name}`);
     const uploadTask = profImageRef.put(file)
-
-    console.log(profImageRef.fullPath);
-
 
     dispatch({ type: IMAGE_UPLOADED });
     uploadTask
@@ -139,6 +137,7 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
 
     return(dispatch) => {
         const db = firebase.firestore();
+        dispatch({ type: PROFILE_FINISH });
 
         console.log(male, age, region, name, profile, profileImage);
 
@@ -157,9 +156,26 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
         }, {merge: true})
         .then(() => {
             console.log("データ格納成功");
-            dispatch({ type: PROFILE_FINISH });
-        });
+            profileFinishSuccess(dispatch)
+        })
+        .catch(error => {
+            console.log(`エラーが発生しました${error}`);
+            profileFinishFail(dispatch);
+        })
+        ;
     }
+}
+
+const profileFinishSuccess = dispatch => {
+    dispatch({
+        type:PROFILE_FINISH_SUCCESS
+    })
+}
+
+const profileFinishFail = dispatch => {
+    dispatch({
+        type: PROFILE_FINISH_FAIL
+    })
 }
 
 export const profileGet = (uid) => {

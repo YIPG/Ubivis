@@ -6,6 +6,8 @@ export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const LOGOUT_USER_SUCCESS = 'logout_user_success';
 export const LOGOUT_USER_FAIL = 'logout_user_fail';
+export const IS_LOGGED = 'is_logged';
+export const IS_NOT_LOGGED = 'is_not_logged';
 
 export const SEX_CHANGED = 'sex_changed';
 export const AGE_CHANGED = 'age_changed';
@@ -15,6 +17,8 @@ export const SNACK_CHANGED = 'snack_changed';
 export const PROFILE_CHANGED = 'profile_changed';
 export const PROFILEIMAGE_CHANGED = 'profileimage_changed';
 export const PROFILE_FINISH = 'profile_finish';
+export const PROFILE_FINISH_SUCCESS = 'profile_finish_success';
+export const PROFILE_FINISH_FAIL = 'profile_finish_fail';
 export const IMAGE_UPLOADED = 'image_uploaded';
 
 export const LOCATE_USER = 'locate_user';

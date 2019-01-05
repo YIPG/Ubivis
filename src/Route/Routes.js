@@ -5,6 +5,7 @@ import Home from '../container/Home';
 import WelcomeScreen from '../container/WelcomeScreen';
 import UserMap from '../container/UserMap';
 import Main from '../container/Main';
+import Mypage from '../container/Mypage';
 // import WorkerMap from './containers/WorkersMap';
 // import MyPage from './containers/Mypage';
 // import Choice from './containers/Choice';
@@ -23,6 +24,7 @@ const Routes = () => {
                     <PrivateRoute path='/welcome' component={WelcomeScreen} />
                     <Route path='/map' component={UserMap} />
                     <Route path='/main' component={Main} />
+                    <PrivateRoute path='/mypage' component={Mypage} />
                     {/* <Route path='/workermap' component={WorkerMap} />
                     <Route path='/profile' component={MyPage} />
                     <Route path='/choice' component={Choice} /> */}

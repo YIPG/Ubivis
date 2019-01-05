@@ -11,6 +11,9 @@ import {
 const styles = theme => ({
     progress: {
         marginTop: theme.spacing.unit * 4
+    },
+    list: {
+        listStyleType: "none",
     }
 })
 
@@ -23,13 +26,15 @@ class Main extends React.Component {
         const {classes} = this.props;
         const {fetchUserList, loading} = this.props.main;
 
+        console.log("renderが呼ばれた")
+
         if(loading){
             return <CircularProgress className={classes.progress} size={30} color="secondary" />
         }
         return _.map(fetchUserList,fetchedUser =>  {
-            console.log(fetchedUser);
             return (
                 <li
+                    className={classes.list}
                     key={fetchedUser.id}
                 >
                     <UserCard

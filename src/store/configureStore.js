@@ -8,7 +8,7 @@ import reducer from '../reducers';
 const persistConfig = {
     key: 'root', // Storageに保存されるキー名を指定する
     storage, // 保存先としてlocalStorageがここで設定される
-    whitelist: ['auth'] // Stateは`auth`と'profile'のみStorageに保存する
+    whitelist: ['auth', 'profile'] // Stateは`auth`と'profile'のみStorageに保存する
     // blacklist: ['visibilityFilter'] // `visibilityFilter`は保存しない
   }
 

@@ -1,16 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {  Route, Redirect } from 'react-router-dom';
-import firebase from 'firebase';
 
-function PrivateRoute({ component: Component, ...rest }) {
-  console.log(firebase.auth().currentUser);
+function PrivateRoute({ user, component: Component, ...rest }) {
   return (
     <Route
       {...rest}
       render={props => 
         // ここで認証状態を取得します。
         // firebaseだったらfirebase.auth.currentUser !== nullとかで同様になります。
-        firebase.auth().currentUser !== null ? (
+        user !== null ? (
           // ログイン済みならば、PrivateRouteに渡されたcomponentを返します。
           <Component {...props} />
         ) : (
@@ -24,8 +23,8 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 
-// const mapStateToProps = state => ({
-//     user: state.auth.user
-// })
+const mapStateToProps = state => ({
+    user: state.auth.user
+})
 
-export default PrivateRoute;
+export default connect(mapStateToProps)(PrivateRoute);

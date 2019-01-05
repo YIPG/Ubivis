@@ -7,9 +7,24 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAIL
+    LOGOUT_USER_FAIL,
+    IS_LOGGED,
+    IS_NOT_LOGGED
 } from './types';
 import history from '../Route/history';
+
+export const is_logged = (user) => {
+    return {
+        type: IS_LOGGED,
+        payload: user
+    }
+}
+
+export const is_not_logged = () => {
+    return {
+        type: IS_NOT_LOGGED
+    }
+}
 
 export const emailChanged = (text) => {
     return {

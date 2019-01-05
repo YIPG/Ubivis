@@ -65,7 +65,7 @@ class ButtonAppBar extends React.Component {
     };
 
     handleToProfile = () => {
-        history.push('/profile')
+        history.push('/mypage')
     }
 
     handleToLoginPage = () => {
@@ -104,6 +104,7 @@ class ButtonAppBar extends React.Component {
                     <ListItemLink to='/welcome' primary='ウェルカム' />
                     <ListItemLink to='/map' primary='地図' />
                     <ListItemLink to='/main' primary='メインβ' />
+                    <ListItemLink to='/mypage' primary='マイページ' />
                 </List>
             </div>
         );

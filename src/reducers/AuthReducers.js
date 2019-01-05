@@ -6,7 +6,9 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAIL
+    LOGOUT_USER_FAIL,
+    IS_LOGGED,
+    IS_NOT_LOGGED
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -36,6 +38,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE, isLoggedIn: false };
         case LOGOUT_USER_FAIL:
             return { ...state, error: 'Logout Failed.', loading: false };
+        case IS_LOGGED:
+            return {...state, user: action.payload, isLoggedIn:true};
+        case IS_NOT_LOGGED:
+            return {...state, user: null, isLoggedIn:false};
         default:
             return state;
     }
