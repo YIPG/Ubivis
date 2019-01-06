@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
 import Collapse from '@material-ui/core/Collapse';
-import LocationOn from '@material-ui/icons/LocationOn';
 
 
 const styles = theme =>  ({
@@ -86,7 +85,6 @@ class UserCard extends React.Component {
             </CardActionArea>
             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                <LocationOn />
                 <Typography className={classes.multiLine} component='p'>
                   {profile}
                 </Typography>
