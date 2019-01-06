@@ -56,6 +56,7 @@ class UserCard extends React.Component {
 
   handleSlideClick = () => {
     this.setState(state => ({ checked: !state.checked }));
+    
   };
 
   handleCallClick = () => {
@@ -95,7 +96,7 @@ class UserCard extends React.Component {
               <Button　onClick={this.handleCallClick} className={classes.like} size="small" color="primary">
                 この人を呼ぶ
               </Button>
-              <Button onClick={this.handleSlideClick} className={classes.dislike} size="small" color="primary">
+              <Button onClick={this.props.deleteUser} className={classes.dislike} size="small" color="primary">
                 違う人を呼ぶ
               </Button>
             </CardActions>
@@ -107,7 +108,7 @@ class UserCard extends React.Component {
 }
 
 UserCard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(UserCard);

@@ -5,7 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import UserCard from '../../components/Card';
 import {
-    fetchUserList
+    fetchUserList,
+    deleteUserFromList
 } from '../../actions';
 
 const styles = theme => ({
@@ -31,27 +32,28 @@ class Main extends React.Component {
     }
 
     renderCard(){
-        const {classes} = this.props;
+        const {classes, deleteUserFromList} = this.props;
         const {fetchUserList, loading} = this.props.main;
-
-        console.log("renderが呼ばれた")
 
         if(loading){
             return <CircularProgress className={classes.progress} size={60} />
         }
         return _.map(fetchUserList,fetchedUser =>  {
-            return (
-                <li
-                    className={classes.list}
-                    key={fetchedUser.id}
-                >
-                    <UserCard
-                        name={fetchedUser.data.name}
-                        profile={fetchedUser.data.profile}
-                        img_src={fetchedUser.data.profileImageURL}
-                    />
-                </li>
-            )
+            if(fetchedUser.show){
+                return (
+                    <li
+                        className={classes.list}
+                        key={fetchedUser.id}
+                    >
+                        <UserCard
+                            deleteUser={() => deleteUserFromList(fetchedUser.id)}
+                            name={fetchedUser.data.name}
+                            profile={fetchedUser.data.profile}
+                            img_src={fetchedUser.data.profileImageURL}
+                        />
+                    </li>
+                )
+            }
         })
     }
 
@@ -75,7 +77,8 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    fetchUserList
+    fetchUserList,
+    deleteUserFromList
 })(
     withStyles(styles)(Main)
 );

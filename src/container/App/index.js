@@ -25,8 +25,10 @@ class App extends Component {
         // firebase認証のログイン確認
         firebase.auth().onAuthStateChanged(user => {
             if(user){
+                console.log("ログイン済です")
                 this.props.is_logged(user)
             } else {
+                console.log("ログインしていません")
                 this.props.is_not_logged()
             }
         })

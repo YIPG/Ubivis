@@ -23,7 +23,7 @@ const Routes = () => {
                     <Route path='/login' component={LoginForm} />
                     <PrivateRoute path='/welcome' component={WelcomeScreen} />
                     <Route path='/map' component={UserMap} />
-                    <Route path='/main' component={Main} />
+                    <PrivateRoute path='/main' component={Main} />
                     <PrivateRoute path='/mypage' component={Mypage} />
                     {/* <Route path='/workermap' component={WorkerMap} />
                     <Route path='/profile' component={MyPage} />
