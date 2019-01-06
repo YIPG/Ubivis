@@ -6,7 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import UserCard from '../../components/Card';
 import {
     fetchUserList,
-    deleteUserFromList
+    deleteUserFromList,
+    InitializeUserList
 } from '../../actions';
 
 const styles = theme => ({
@@ -29,6 +30,10 @@ const styles = theme => ({
 class Main extends React.Component {
     componentDidMount() {
         this.props.fetchUserList(this.props.male)
+    }
+
+    componentWillUnmount(){
+        this.props.InitializeUserList();
     }
 
     renderCard(){
@@ -78,7 +83,8 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     fetchUserList,
-    deleteUserFromList
+    deleteUserFromList,
+    InitializeUserList
 })(
     withStyles(styles)(Main)
 );

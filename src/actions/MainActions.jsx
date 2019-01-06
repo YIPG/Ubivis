@@ -4,7 +4,8 @@ import {
     FETCH_USER_LIST_SUCCESS,
     FETCH_USER_LIST_FAIL,
     FETCH_USER_LIST_FINISH,
-    DELETE_USER_FROM_LIST
+    DELETE_USER_FROM_LIST,
+    INITIALIZE_USER_LIST
 } from './types';
 
 export const fetchUserList = (male) => {
@@ -43,5 +44,11 @@ export const deleteUserFromList = (id) => {
     return {
         type: DELETE_USER_FROM_LIST,
         payload: id
+    }
+}
+
+export const InitializeUserList = () => {
+    return {
+        type: INITIALIZE_USER_LIST
     }
 }

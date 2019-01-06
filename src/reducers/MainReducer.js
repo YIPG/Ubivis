@@ -3,7 +3,8 @@ import {
     FETCH_USER_LIST_SUCCESS,
     FETCH_USER_LIST_FAIL,
     FETCH_USER_LIST_FINISH,
-    DELETE_USER_FROM_LIST
+    DELETE_USER_FROM_LIST,
+    INITIALIZE_USER_LIST
 } from '../actions/types';
 
 // fetchUserList: [
@@ -39,6 +40,8 @@ export default (state = INITIAL_STATE, action) => {
                 user => 
                      user.id === action.payload ? {...user, show: !user.show } : user
             )}
+        case INITIALIZE_USER_LIST:
+            return INITIAL_STATE
         default:
             return state
     }
