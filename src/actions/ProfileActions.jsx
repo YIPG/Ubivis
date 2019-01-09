@@ -69,7 +69,7 @@ export const snackChanged = (text) => {
 // Cloud Storage保存
 
 const imageUploaded = (dispatch, file) => {
-    if(Object.keys(file).length === 0){
+    if(file===null || Object.keys(file).length === 0){
         dispatch({ type: IMAGE_UPLOADED });
     } else {
     const { currentUser } = firebase.auth();

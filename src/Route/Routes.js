@@ -6,6 +6,7 @@ import WelcomeScreen from '../container/WelcomeScreen';
 import UserMap from '../container/UserMap';
 import Main from '../container/Main';
 import Mypage from '../container/Mypage';
+import Modal from '../container/Modal';
 // import WorkerMap from './containers/WorkersMap';
 // import MyPage from './containers/Mypage';
 // import Choice from './containers/Choice';
@@ -25,6 +26,7 @@ const Routes = () => {
                     <Route path='/map' component={UserMap} />
                     <PrivateRoute path='/main' component={Main} />
                     <PrivateRoute path='/mypage' component={Mypage} />
+                    <Route path='/modal' component={Modal} />
                     {/* <Route path='/workermap' component={WorkerMap} />
                     <Route path='/profile' component={MyPage} />
                     <Route path='/choice' component={Choice} /> */}

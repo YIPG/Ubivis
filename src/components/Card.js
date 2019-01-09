@@ -91,7 +91,7 @@ class UserCard extends React.Component {
               </CardContent>
             </Collapse>
             <CardActions className={classes.actions} disableActionSpacing>
-              <Button　onClick={this.handleCallClick} className={classes.like} size="small" color="primary">
+              <Button　onClick={this.props.handleClick} className={classes.like} size="small" color="primary">
                 この人を呼ぶ
               </Button>
               <Button onClick={this.props.deleteUser} className={classes.dislike} size="small" color="primary">
