@@ -8,6 +8,8 @@ export const LOGOUT_USER_SUCCESS = 'logout_user_success';
 export const LOGOUT_USER_FAIL = 'logout_user_fail';
 export const IS_LOGGED = 'is_logged';
 export const IS_NOT_LOGGED = 'is_not_logged';
+export const PHONE_CHANGED ='phone_changed';
+export const PHONE_AUTH ='phone_auth';
 
 export const SEX_CHANGED = 'sex_changed';
 export const AGE_CHANGED = 'age_changed';

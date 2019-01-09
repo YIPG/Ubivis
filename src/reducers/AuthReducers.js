@@ -8,10 +8,12 @@ import {
     LOGOUT_USER_SUCCESS,
     LOGOUT_USER_FAIL,
     IS_LOGGED,
-    IS_NOT_LOGGED
+    IS_NOT_LOGGED,
+    PHONE_CHANGED
 } from '../actions/types';
 
 const INITIAL_STATE = {
+    phoneNumber: '',
     email: '',
     password: '',
     user: null,
@@ -42,6 +44,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, user: action.payload, isLoggedIn:true};
         case IS_NOT_LOGGED:
             return {...state, user: null, isLoggedIn:false};
+        case PHONE_CHANGED:
+            return {...state, phoneNumber:action.payload}
         default:
             return state;
     }

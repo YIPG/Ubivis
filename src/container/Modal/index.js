@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {
+  phoneChanged
+} from '../../actions';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,25 +11,33 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import MaskedInput from 'react-text-mask';
 
 const styles = theme => ({
     container: {
-      display: 'flex',
-      flexWrap: 'noWrap',
-      marginTop: theme.spacing.unit
+      marginTop: theme.spacing.unit *2
     },
     formControl: {
-      margin: theme.spacing.unit,
+      // margin: theme.spacing.unit,
       minWidth: 60,
     },
   });
+
+function TextMaskCustom(props){
+  const { inputRef, ...other} = props;
+  
+  return(
+    <MaskedInput
+      {...other}
+      ref={ref => {
+        inputRef(ref ? ref.inputElement: null);
+      }}
+      mask={[/\d/,/\d/,/\d/,' ', /\d/,/\d/,/\d/,/\d/,' ', /\d/,/\d/,/\d/,/\d/]}
+      showMask
+      placeholderChar={'\u2000'}
+    />
+  )
+}
 
 class FormDialog extends React.Component {
   state = {
@@ -33,9 +45,9 @@ class FormDialog extends React.Component {
     age: 10
   };
 
-  handleChange = name => event => {
-    this.setState({ [name]: Number(event.target.value) });
-  };
+  handleChange= (e) => {
+    this.props.phoneChanged(e.target.value.replace(/\s+/g, ""))
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -63,32 +75,18 @@ class FormDialog extends React.Component {
             <DialogContentText>
               Ubivisでは本人確認のために電話番号の認証をお願いしております。
             </DialogContentText>
-            <form className={classes.container}>
-                <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">国</InputLabel>
-                        <Select
-                            value={this.state.age}
-                            onChange={this.handleChange('age')}
-                            input={<Input id="age-simple" />}
-                        >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                            <MenuItem value={10}>+81</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        autoFocus
-                        id="name"
-                        label='電話番号'
-                        placeholder="90-1234-5678"
-                        type="email"
-                    />
-                </FormControl>
-            </form>
+            <div className={classes.container}>
+              <TextField
+                  onChange={this.handleChange.bind(this)}
+                  autoFocus
+                  id="name"
+                  fullWidth
+                  helperText="例: 090 1234 5678"
+                  InputProps={{
+                    inputComponent: TextMaskCustom,
+                  }}
+              />
+            </div>
           </DialogContent>
           <DialogActions style={{ marginBottom: 20, marginRight:10}}>
             <Button onClick={this.handleClose} color="primary">
@@ -104,4 +102,12 @@ class FormDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(FormDialog)
+const mapStateToProps = state => {
+  return state.profile;
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps, {
+    phoneChanged
+  })(FormDialog)
+)
