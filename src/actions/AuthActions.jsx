@@ -101,7 +101,10 @@ const loginUserSuccess = (dispatch, user) => {
     });
 
     const actinoCodeSettings = {
-        url: (process.env.NODE_ENV!=="production" ? "https://ubivis-development.firebaseapp.com/verified/?email=": 'https://ubivis.tokyo/verified/?email=') + firebase.auth().currentUser.email, 
+        url: (process.env.NODE_ENV==="production" && process.env.REACT_APP_PROJECT_ID==="deploytest-5e1c6" ?
+        'https://ubivis.tokyo/verified/?email=':
+        "https://ubivis-development.firebaseapp.com/verified/?email="
+        ) + firebase.auth().currentUser.email, 
     }
 
     console.log(firebase.auth().currentUser.emailVerified)
