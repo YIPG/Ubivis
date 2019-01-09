@@ -9,7 +9,9 @@ import {
     LOGOUT_USER_SUCCESS,
     LOGOUT_USER_FAIL,
     IS_LOGGED,
-    IS_NOT_LOGGED
+    IS_NOT_LOGGED,
+    PHONE_CHANGED,
+    PHONE_AUTH
 } from './types';
 import history from '../Route/history';
 
@@ -23,6 +25,21 @@ export const is_logged = (user) => {
 export const is_not_logged = () => {
     return {
         type: IS_NOT_LOGGED
+    }
+}
+
+export const phoneChanged = (num) => {
+    console.log(num);
+    return {
+        type: PHONE_CHANGED,
+        payload: num
+    }
+}
+
+export const phoneAuth = (num) => {
+    return(dispatch) => {
+        dispatch({ type: PHONE_AUTH });
+
     }
 }
 
@@ -82,7 +99,18 @@ const loginUserSuccess = (dispatch, user) => {
         type: LOGIN_USER_SUCCESS,
         payload: user
     });
-    console.log('Login Success');
-    console.log(`現在のログイン状態は${user !== null}です。`);
-    history.push('/welcome')
+
+    const actinoCodeSettings = {
+        url: (process.env.NODE_ENV!=="production" ? "https://ubivis-development.firebaseapp.com/verified/?email=": 'https://ubivis.tokyo/verified/?email=') + firebase.auth().currentUser.email, 
+    }
+
+    if(firebase.auth().currentUser.emailVerified){
+        history.push('/welcome')
+    } else {
+        firebase.auth().currentUser.sendEmailVerification(actinoCodeSettings)
+        .then(()=> {
+            history.push('/confirm')
+        })
+        .catch(error => console.log("なにかエラーが起きたようです",error))
+    }
 };
