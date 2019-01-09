@@ -101,14 +101,21 @@ const loginUserSuccess = (dispatch, user) => {
     });
 
     const actinoCodeSettings = {
-        url: (process.env.NODE_ENV!=="production" ? "https://ubivis-development.firebaseapp.com/verified/?email=": 'https://ubivis.tokyo/verified/?email=') + firebase.auth().currentUser.email, 
+        url: (process.env.NODE_ENV==="production" && process.env.REACT_APP_PROJECT_ID==="deploytest-5e1c6" ?
+        'https://ubivis.tokyo/verified/?email=':
+        "https://ubivis-development.firebaseapp.com/verified/?email="
+        ) + firebase.auth().currentUser.email, 
     }
+
+    console.log(firebase.auth().currentUser.emailVerified)
 
     if(firebase.auth().currentUser.emailVerified){
         history.push('/welcome')
     } else {
+        console.log("メール認証されてません！")
         firebase.auth().currentUser.sendEmailVerification(actinoCodeSettings)
         .then(()=> {
+            console.log("メール送りました！")
             history.push('/confirm')
         })
         .catch(error => console.log("なにかエラーが起きたようです",error))
