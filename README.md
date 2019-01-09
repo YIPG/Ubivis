@@ -2,6 +2,8 @@
 
 デプロイ用レポジトリ
 
-available @ https://ubivis.tokyo/
+本番available @ https://ubivis.tokyo/
+
+開発環境available @ https://ubivis-development.firebaseapp.com/
 
 Masterにプッシュ後即座にDeployされる。
