@@ -5,14 +5,15 @@ import {
     PROFILE_FINISH,
     PROFILE_FINISH_SUCCESS,
     PROFILE_FINISH_FAIL,
-    IMAGE_UPLOADED,
     NAME_CHANGED,
     PROFILE_CHANGED,
     SNACK_CHANGED,
     PROFILEIMAGE_CHANGED,
     PROFILE_GET,
     PROFILE_GET_FAIL,
-    PROFILE_GET_SUCCESS
+    PROFILE_GET_SUCCESS,
+    IMAGE_UPLOAD_FINISH,
+    IMAGE_UPLOAD_START
 } from '../actions/types';
   
 const INITIAL_STATE = {
@@ -21,7 +22,6 @@ const INITIAL_STATE = {
     region: '',
     name: '',
     profile: '',
-    profImage: false,
     profileImage: null,
     profileImageURL: "",
     snack: '',
@@ -47,10 +47,12 @@ export default (state = INITIAL_STATE, action) => {
          return { ...state, profileImage: action.payload };
       case SNACK_CHANGED:
          return { ...state, snack: action.payload };
-      case IMAGE_UPLOADED:
-         return { ...state, profImage: true };
+      case IMAGE_UPLOAD_START:
+         return { ...state, imageUpoading: true};
+      case IMAGE_UPLOAD_FINISH:
+         return {...state, imageUploading: false}
       case PROFILE_FINISH:
-         return {...state, updateLoading: true};
+         return {...state, updateLoading: true, imageUploading: true};
       case PROFILE_FINISH_SUCCESS:
          return {...state, updateLoading: false};
       case PROFILE_FINISH_FAIL:

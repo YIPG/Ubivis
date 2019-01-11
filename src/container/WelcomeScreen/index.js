@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography, Step, Stepper, StepLabel, Button } from '@material-ui/core';
+import { Grid, Typography, Step, Stepper, StepLabel, Button, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import SexSelect from './Sex';
 import AgeSelect from './Age';
@@ -32,6 +32,13 @@ const styles = theme => ({
       marginTop: theme.spacing.unit,
       marginBottom: theme.spacing.unit,
     },
+    progress: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: theme.spacing.unit * 5
+    }
   });
 
 function getSteps() {
@@ -150,6 +157,33 @@ class WelcomeScreen extends React.Component {
       
       return false
     }
+
+    renderFinishScene(){
+      const { classes } = this.props;
+      if(this.props.updateLoading || this.props.imageUploading){
+        return (
+          <div className={classes.progress}>
+              <CircularProgress size={30} />
+          </div>
+        )
+      }
+      return (
+        <div>
+          <Grid container direction='column' alignItems='center' >
+            <Grid item>
+              <Typography className={classes.instructions}>
+                さあ、始めましょう！
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" onClick={this.handleJump} className={classes.button}>
+                メイン画面へ
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      )
+    }
   
     render() {
       const { classes } = this.props;
@@ -177,20 +211,7 @@ class WelcomeScreen extends React.Component {
           </Stepper>
           <div>
             {activeStep === steps.length ? (
-              <div>
-              <Grid container direction='column' alignItems='center' >
-                <Grid item>
-                  <Typography className={classes.instructions}>
-                    さあ、始めましょう！
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" color="primary" onClick={this.handleJump} className={classes.button}>
-                    メイン画面へ
-                  </Button>
-                </Grid>
-              </Grid>
-              </div>
+              this.renderFinishScene()
             ) : (
               <div>
                 {getStepContent(activeStep)}
@@ -217,6 +238,8 @@ class WelcomeScreen extends React.Component {
                     )}
                   </Grid>
                   <Grid item>
+                    {this.props.updateLoading ?
+                    <CircularProgress />:
                     <Button
                       variant="outlined"
                       color="primary"
@@ -226,6 +249,7 @@ class WelcomeScreen extends React.Component {
                     >
                       {activeStep === steps.length - 1 ? '終了' : '次へ'}
                     </Button>
+                    }
                   </Grid>
                 </Grid>
               </div>

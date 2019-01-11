@@ -22,6 +22,8 @@ export const PROFILE_FINISH = 'profile_finish';
 export const PROFILE_FINISH_SUCCESS = 'profile_finish_success';
 export const PROFILE_FINISH_FAIL = 'profile_finish_fail';
 export const IMAGE_UPLOADED = 'image_uploaded';
+export const IMAGE_UPLOAD_START = 'image_upload_start';
+export const IMAGE_UPLOAD_FINISH = 'image_upload_finish';
 
 export const LOCATE_USER = 'locate_user';
 export const ON_VIEWPORT_CHANGE = 'on_viewport_change';

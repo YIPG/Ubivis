@@ -13,7 +13,9 @@ import {
     PROFILEIMAGE_CHANGED,
     PROFILE_GET,
     PROFILE_GET_FAIL,
-    PROFILE_GET_SUCCESS
+    PROFILE_GET_SUCCESS,
+    IMAGE_UPLOAD_START,
+    IMAGE_UPLOAD_FINISH,
 } from './types';
 
 export const sexChanged = (sex) => {
@@ -69,63 +71,67 @@ export const snackChanged = (text) => {
 // Cloud Storage保存
 
 const imageUploaded = (dispatch, file) => {
-    if(file===null || Object.keys(file).length === 0){
-        dispatch({ type: IMAGE_UPLOADED });
+    if(file===null){
+        console.log("挙げられなかった")
+        dispatch({ type: IMAGE_UPLOAD_FINISH });
     } else {
-    const { currentUser } = firebase.auth();
-    const storageRef = firebase.storage().ref();
-    const userRef = storageRef.child(`${currentUser.uid}`);
-    const imageRef = userRef.child('images');
-    const profImageRef = imageRef.child(`${file.name}`);
-    const uploadTask = profImageRef.put(file)
+        dispatch({ type: IMAGE_UPLOAD_START});
+        const { currentUser } = firebase.auth();
+        const storageRef = firebase.storage().ref();
+        const userRef = storageRef.child(`${currentUser.uid}`);
+        const imageRef = userRef.child('images');
+        const profImageRef = imageRef.child(`${file.name}`);
+        const uploadTask = profImageRef.put(file)
 
-    dispatch({ type: IMAGE_UPLOADED });
-    uploadTask
-    .on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function(snapshot) {
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
+        console.log("あげようとしてうる")
+
+        uploadTask
+        .on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+        function(snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+
+                // no default
+            }
+        }, function(error) {
+
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+            case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+
+            case 'storage/canceled':
+            // User canceled the upload
+            break;
+
+
+            case 'storage/unknown':
+            // Unknown error occurred, inspect error.serverResponse
+            break;
 
             // no default
         }
-    }, function(error) {
-
-    // A full list of error codes is available at
-    // https://firebase.google.com/docs/storage/web/handle-errors
-    switch (error.code) {
-        case 'storage/unauthorized':
-        // User doesn't have permission to access the object
-        break;
-
-        case 'storage/canceled':
-        // User canceled the upload
-        break;
-
-
-        case 'storage/unknown':
-        // Unknown error occurred, inspect error.serverResponse
-        break;
-
-        // no default
-    }
-    }, function() {
-    // Upload completed successfully, now we can get the download URL
-    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-        firebase.firestore().collection('users').doc(currentUser.uid).set({
-            profileImageURL: downloadURL
-        }, { merge: true})
+        }, function() {
+        // Upload completed successfully, now we can get the download URL
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            firebase.firestore().collection('users').doc(currentUser.uid).set({
+                    profileImageURL: downloadURL
+                }, { merge: true})
             .then(() => console.log("プロフィールイメージのURLを格納しました"))
-        console.log('File available at', downloadURL);
-    });
-    });
+            console.log('File available at', downloadURL);
+            dispatch({ type: IMAGE_UPLOAD_FINISH });
+        });
+        });
 
                 
                 
@@ -142,6 +148,8 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
         console.log(male, age, region, name, profile, profileImage);
 
         imageUploaded(dispatch, profileImage);
+
+        console.log("画像を上げた")
 
         db.settings({
             timestampsInSnapshots: true
