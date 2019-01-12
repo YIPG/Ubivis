@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Pin from './pin';
 import mapboxConfig from '../../Mapbox/config';
 import { locate_user, on_viewport_change } from '../../actions/UserMapActions';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
     buttonWrap: {
@@ -21,6 +22,13 @@ const styles = theme => ({
 })
 
 class UserMapContent extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            loading: false
+        }
+    }
+
     componentDidMount(){
         this.watchID=null
     }
@@ -29,6 +37,9 @@ class UserMapContent extends React.Component {
         if(this.watchID!==null){
             navigator.geolocation.clearWatch(this.watchID)
             console.log("logger stopped!");
+            this.setState({
+                loading:false
+            })
         }
     }
 
@@ -40,6 +51,10 @@ class UserMapContent extends React.Component {
 
     // ここアロー関数じゃないとthisの参照がundefinedとなるので注意
     handleGo = () => {
+        this.setState({
+            loading:true
+        })
+
         const db = firebase.firestore()
         this.watchID = navigator.geolocation.watchPosition(
             // 位置情報取得成功
@@ -62,6 +77,9 @@ class UserMapContent extends React.Component {
             // 位置情報取得失敗
             err => {
                 console.log(err)
+                this.setState({
+                    loading:false
+                })
             },
             // オプション
             {
@@ -75,6 +93,9 @@ class UserMapContent extends React.Component {
         if(this.watchID!==null){
             navigator.geolocation.clearWatch(this.watchID)
             console.log("logger stopped!");
+            this.setState({
+                loading:false
+            })
         } else {
             console.log("まだロガー起動してないよ")
         }
@@ -99,7 +120,7 @@ class UserMapContent extends React.Component {
                 </ReactMapGL>
                 <div className={classes.buttonWrap}>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>現在地を取得</Button>
-                    <Button className={classes.button} variant="outlined" color="primary" onClick={this.handleGo}>Go!</Button>
+                    {this.state.loading?<CircularProgress className={classes.button} size={30} />:<Button className={classes.button} variant="outlined" color="primary" onClick={this.handleGo}>Go!</Button>}
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleStop}>Stop!</Button>
                 </div>
             </div>
