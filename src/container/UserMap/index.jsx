@@ -61,13 +61,16 @@ class UserMapContent extends React.Component {
             pos=> {
                 const latitude = pos.coords.latitude;
                 const longitude = pos.coords.longitude;
+                const heading = pos.coords.heading;
                 console.log(latitude, longitude);
                 firebase.auth().onAuthStateChanged(user =>{
+                    console.log(user.uid)
                     db.collection("locations").add({
                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         uid: user.uid,
                         geohash: geohash.encode(latitude, longitude),
-                        geopoint: new firebase.firestore.GeoPoint(latitude, longitude)
+                        geopoint: new firebase.firestore.GeoPoint(latitude, longitude),
+                        heading: heading
                     })
                     .then(docRef => {
                         console.log(`位置情報を格納完了${docRef.id}`)
