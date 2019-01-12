@@ -9,6 +9,7 @@
     "firebase": "^5.7.1",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
+    "ngeohash": "^0.6.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-dropzone": "^8.0.3",
