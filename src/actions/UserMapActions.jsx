@@ -3,8 +3,8 @@ import firebase from 'firebase';
 import {
     LOCATE_USER,
     ON_VIEWPORT_CHANGE,
-    TRACK_USER_START
 } from './types';
+import geohash from 'ngeohash';
 
 export const locate_user = () => {
     const getPosition = function (options) {
@@ -12,14 +12,29 @@ export const locate_user = () => {
           navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
     }
+
+    const db = firebase.firestore();
     
     return(dispatch) => {
         getPosition()
             .then((position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                // Firebase
+                firebase.auth().onAuthStateChanged(user =>{
+                    db.collection("locations").add({
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        uid: user.uid,
+                        geohash: geohash.encode(latitude, longitude),
+                        geopoint: new firebase.firestore.GeoPoint(latitude, longitude)
+                    });
+                })
+
+                // Redux
                 dispatch({ 
                     type: LOCATE_USER,
-                    longitude: position.coords.longitude,
-                    latitude: position.coords.latitude
+                    longitude: longitude,
+                    latitude: latitude
                 })
             })
             .catch((err) => {
@@ -27,31 +42,6 @@ export const locate_user = () => {
             });
     }
 };
-
-export const track_user_start = (position) => {
-    const { currentUser } = firebase.auth();
-    const db = firebase.firestore();
-    const userRef = db.collection("users").doc(currentUser.uid)
-
-    userRef.set({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-    }, { merge: true })
-        .then(() => {
-            console.log("位置情報の格納に成功した");
-            userRef.get()
-                .then(doc => {
-                    console.log("data is", doc.data());
-                    return({
-                        type: TRACK_USER_START
-                    })
-                })
-            
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
-    };
 
 export const on_viewport_change = ({viewport}) => {
     return {

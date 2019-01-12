@@ -1,7 +1,6 @@
 import {
     LOCATE_USER,
     ON_VIEWPORT_CHANGE,
-    TRACK_USER_START
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,8 +23,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, viewport: {...state.viewport, latitude:action.latitude, longitude: action.longitude }, marker:{...state.marker, latitude:action.latitude, longitude: action.longitude}};
         case ON_VIEWPORT_CHANGE:
             return {...state, viewport:action.payload };
-        case TRACK_USER_START:
-            return state;
         default:
             return state;
     }
