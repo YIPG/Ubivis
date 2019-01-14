@@ -9,6 +9,8 @@ import Pin from './pin';
 import mapboxConfig from '../../Mapbox/config';
 import { locate_user, on_viewport_change } from '../../actions/UserMapActions';
 import { CircularProgress } from '@material-ui/core';
+import {defaultMapStyle, pointLayer} from './mapstyle';
+import {fromJS} from "immutable";
 
 const styles = theme => ({
     buttonWrap: {
@@ -25,7 +27,8 @@ class UserMapContent extends React.Component {
     constructor(){
         super();
         this.state = {
-            loading: false
+            loading: false,
+            mapStyle: defaultMapStyle
         }
     }
 
@@ -104,6 +107,24 @@ class UserMapContent extends React.Component {
         }
     }
 
+    getRocket = () => {
+        let {mapStyle} = this.state;
+        if(!mapStyle.hasIn(['sources', 'drone'])) {
+            mapStyle=mapStyle
+                .setIn(['sources', 'drone'], fromJS({type: 'geojson'}))
+                .set('layers', mapStyle.get('layers').push(pointLayer))
+        }
+        mapStyle = mapStyle.setIn(['sources', 'drone', 'data'], {
+            type: 'Point',
+            coordinates: [
+              10,
+              10
+            ]
+          })
+        
+          this.setState({mapStyle})
+    }
+
     render() {
         const { classes, on_viewport_change, map } = this.props;
         return(
@@ -111,6 +132,7 @@ class UserMapContent extends React.Component {
                 <ReactMapGL
                     {...map.viewport}
                     width="100%"
+                    mapStyle={this.state.mapStyle}
                     onViewportChange={(viewport) => on_viewport_change({viewport})}
                     mapboxApiAccessToken={mapboxConfig}
                 >
@@ -125,6 +147,7 @@ class UserMapContent extends React.Component {
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>現在地を取得</Button>
                     {this.state.loading?<CircularProgress className={classes.button} size={30} />:<Button className={classes.button} variant="outlined" color="primary" onClick={this.handleGo}>Go!</Button>}
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleStop}>Stop!</Button>
+                    <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRocket}>Rocket!</Button>
                 </div>
             </div>
         );

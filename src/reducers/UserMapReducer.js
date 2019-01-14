@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case LOCATE_USER:
-            return { ...state, viewport: {...state.viewport, latitude:action.latitude, longitude: action.longitude }, marker:{...state.marker, latitude:action.latitude, longitude: action.longitude}};
+            return { ...state, viewport: {...state.viewport, latitude:action.latitude, longitude: action.longitude, zoom:15 }, marker:{...state.marker, latitude:action.latitude, longitude: action.longitude}};
         case ON_VIEWPORT_CHANGE:
             return {...state, viewport:action.payload };
         default:
