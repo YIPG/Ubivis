@@ -38,4 +38,5 @@ export const FETCH_USER_LIST_FAIL = 'fetch_user_list_fail';
 export const FETCH_USER_LIST_FINISH = 'fetch_user_list_finish';
 export const DELETE_USER_FROM_LIST = 'delete_user_from_list';
 export const INITIALIZE_USER_LIST = 'initialize_user_list';
-
+export const HANDLE_CALL = 'handle_call';
+export const UPDATE_LOCATION = 'update_location';

@@ -59,20 +59,34 @@ class UserMapContent extends React.Component {
         })
 
         const db = firebase.firestore()
+        firebase.auth().onAuthStateChanged(user =>{
+            // ステータスを待機中に更新
+            db.collection("users").doc(user.uid).set({
+                waiting: true
+            }, {merge:true})
+            .then(()=>{
+                console.log(user.uid, 'を待機中に変更したよ')
+            })
+            .catch(err=>{
+                console.log(`エラー${err}が発生した`)
+            })
+        })
+        
         this.watchID = navigator.geolocation.watchPosition(
             // 位置情報取得成功
             pos=> {
                 const latitude = pos.coords.latitude;
                 const longitude = pos.coords.longitude;
                 const heading = pos.coords.heading;
+                const firebaseGeopoint = new firebase.firestore.GeoPoint(latitude, longitude);
                 console.log(latitude, longitude);
                 firebase.auth().onAuthStateChanged(user =>{
-                    console.log(user.uid)
+                    // 位置情報の格納
                     db.collection("locations").add({
                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         uid: user.uid,
                         geohash: geohash.encode(latitude, longitude),
-                        geopoint: new firebase.firestore.GeoPoint(latitude, longitude),
+                        geopoint: firebaseGeopoint,
                         heading: heading
                     })
                     .then(docRef => {
@@ -97,10 +111,26 @@ class UserMapContent extends React.Component {
 
     handleStop =() => {
         if(this.watchID!==null){
+            // 位置情報の取得をストップ
             navigator.geolocation.clearWatch(this.watchID)
             console.log("logger stopped!");
             this.setState({
                 loading:false
+            })
+
+            // ステータスを非待機中にする
+            const db = firebase.firestore()
+
+            firebase.auth().onAuthStateChanged(user =>{
+                db.collection("users").doc(user.uid).set({
+                    waiting: false
+                }, {merge:true})
+                .then(()=>{
+                    console.log(user.uid, 'を待機中じゃなく変更したよ')
+                })
+                .catch(err=>{
+                    console.log(`エラー${err}が発生した`)
+                })
             })
         } else {
             console.log("まだロガー起動してないよ")
@@ -126,7 +156,7 @@ class UserMapContent extends React.Component {
     }
 
     render() {
-        const { classes, on_viewport_change, map } = this.props;
+        const { classes, on_viewport_change, map, auth } = this.props;
         return(
             <div>
                 <ReactMapGL
@@ -145,8 +175,8 @@ class UserMapContent extends React.Component {
                 </ReactMapGL>
                 <div className={classes.buttonWrap}>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>現在地を取得</Button>
-                    {this.state.loading?<CircularProgress className={classes.button} size={30} />:<Button className={classes.button} variant="outlined" color="primary" onClick={this.handleGo}>Go!</Button>}
-                    <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleStop}>Stop!</Button>
+                    {this.state.loading?<CircularProgress className={classes.button} size={30} />:<Button disabled={auth.user===null} className={classes.button} variant="outlined" color="primary" onClick={this.handleGo}>Go!</Button>}
+                    <Button disabled={auth.user===null||!this.state.loading} className={classes.button} variant="outlined" color="secondary" onClick={this.handleStop}>Stop!</Button>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRocket}>Rocket!</Button>
                 </div>
             </div>

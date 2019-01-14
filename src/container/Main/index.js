@@ -7,7 +7,8 @@ import UserCard from '../../components/Card';
 import {
     fetchUserList,
     deleteUserFromList,
-    InitializeUserList
+    InitializeUserList,
+    handleCall
 } from '../../actions';
 
 const styles = theme => ({
@@ -37,7 +38,7 @@ class Main extends React.Component {
     }
 
     renderCard(){
-        const {classes, deleteUserFromList} = this.props;
+        const {classes, deleteUserFromList, handleCall} = this.props;
         const {fetchUserList, loading} = this.props.main;
 
         if(loading){
@@ -51,6 +52,7 @@ class Main extends React.Component {
                         key={fetchedUser.id}
                     >
                         <UserCard
+                            handleClick={()=>handleCall(fetchedUser.id)}
                             deleteUser={() => deleteUserFromList(fetchedUser.id)}
                             name={fetchedUser.data.name}
                             profile={fetchedUser.data.profile}
@@ -84,7 +86,8 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     fetchUserList,
     deleteUserFromList,
-    InitializeUserList
+    InitializeUserList,
+    handleCall
 })(
     withStyles(styles)(Main)
 );
