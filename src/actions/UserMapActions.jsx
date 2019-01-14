@@ -22,12 +22,14 @@ export const locate_user = () => {
                 const longitude = position.coords.longitude;
                 // Firebase
                 firebase.auth().onAuthStateChanged(user =>{
-                    db.collection("locations").add({
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        uid: user.uid,
-                        geohash: geohash.encode(latitude, longitude),
-                        geopoint: new firebase.firestore.GeoPoint(latitude, longitude)
-                    });
+                    if(user){
+                        db.collection("locations").add({
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            uid: user.uid,
+                            geohash: geohash.encode(latitude, longitude),
+                            geopoint: new firebase.firestore.GeoPoint(latitude, longitude)
+                        });
+                    }
                 })
 
                 // Redux
