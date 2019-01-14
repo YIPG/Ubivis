@@ -117,8 +117,8 @@ class UserMapContent extends React.Component {
         mapStyle = mapStyle.setIn(['sources', 'drone', 'data'], {
             type: 'Point',
             coordinates: [
-              10,
-              10
+              140,
+              36
             ]
           })
         

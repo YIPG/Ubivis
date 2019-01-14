@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable';
-import MAP_STYLE from '../../Mapbox/mapstyle-light.json';
+import MAP_STYLE from '../../Mapbox/mapstyle-basic.json';
 
 export const pointLayer = fromJS({
     "id": "drone",
