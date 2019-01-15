@@ -159,7 +159,8 @@ export const profileFinish = ({ male, age, region, name, profile, profileImage }
             age: age,
             region: region,
             name: name,
-            profile: profile
+            profile: profile,
+            waiting: false
         }, {merge: true})
         .then(() => {
             console.log("データ格納成功");

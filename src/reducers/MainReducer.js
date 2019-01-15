@@ -4,7 +4,9 @@ import {
     FETCH_USER_LIST_FAIL,
     FETCH_USER_LIST_FINISH,
     DELETE_USER_FROM_LIST,
-    INITIALIZE_USER_LIST
+    INITIALIZE_USER_LIST,
+    HANDLE_CALL,
+    UPDATE_LOCATION
 } from '../actions/types';
 
 // fetchUserList: [
@@ -15,7 +17,9 @@ import {
 
 const INITIAL_STATE = {
     fetchUserList: [],
-    loading: false
+    loading: false,
+    latitude: 0,
+    longitude: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,7 +45,11 @@ export default (state = INITIAL_STATE, action) => {
                      user.id === action.payload ? {...user, show: !user.show } : user
             )}
         case INITIALIZE_USER_LIST:
-            return INITIAL_STATE
+            return {...state, fetchUserList: [], loading:false}
+        case HANDLE_CALL:
+            return state
+        case UPDATE_LOCATION:
+            return {...state, latitude:action.latitude, longitude: action.longitude}
         default:
             return state
     }
