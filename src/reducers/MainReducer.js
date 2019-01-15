@@ -45,7 +45,7 @@ export default (state = INITIAL_STATE, action) => {
                      user.id === action.payload ? {...user, show: !user.show } : user
             )}
         case INITIALIZE_USER_LIST:
-            return INITIAL_STATE
+            return {...state, fetchUserList: [], loading:false}
         case HANDLE_CALL:
             return state
         case UPDATE_LOCATION:

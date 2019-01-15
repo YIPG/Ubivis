@@ -9,7 +9,7 @@ import Mypage from '../container/Mypage';
 import Modal from '../container/Modal';
 import ConfirmEmail from '../components/ConfirmEmal';
 import ConfirmSuccess from '../components/ConfirmSuccess';
-// import WorkerMap from './containers/WorkersMap';
+import WorkerMap from '../container/WorkerMap';
 // import MyPage from './containers/Mypage';
 // import Choice from './containers/Choice';
 import Header from '../container/Header';
@@ -26,6 +26,7 @@ const Routes = () => {
                     <Route path='/login' component={LoginForm} />
                     <PrivateRoute path='/welcome' component={WelcomeScreen} />
                     <Route path='/map' component={UserMap} />
+                    <Route path='/workermap' component={WorkerMap} />
                     <PrivateRoute path='/main' component={Main} />
                     <PrivateRoute path='/mypage' component={Mypage} />
                     <Route path='/modal' component={Modal} />

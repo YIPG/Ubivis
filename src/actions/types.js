@@ -40,3 +40,4 @@ export const DELETE_USER_FROM_LIST = 'delete_user_from_list';
 export const INITIALIZE_USER_LIST = 'initialize_user_list';
 export const HANDLE_CALL = 'handle_call';
 export const UPDATE_LOCATION = 'update_location';
+export const FINISH_TARGET_TRACKING = 'finish_target_tracking';
