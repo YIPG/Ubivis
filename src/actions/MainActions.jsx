@@ -75,7 +75,7 @@ export const handleCall = id => {
 export const finishTargetTracking = () => {
     if(fetchLocationUnsubscribe!==null){
         fetchLocationUnsubscribe();
-        console.log("追跡を中止した", fetchLocationUnsubscribe);
+        console.log("追跡を中止した");
     }
     return ({
         type: FINISH_TARGET_TRACKING
