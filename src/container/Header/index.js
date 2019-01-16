@@ -31,7 +31,7 @@ const styles = {
     },
     menuButton: {
         marginLeft: -12,
-        marginRight: 20,
+        marginRight: 5,
     },
     list: {
         width: 200,
@@ -111,9 +111,9 @@ class ButtonAppBar extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar color='default' position="static">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} onClick={this.toggleDrawer(true)} color="inherit" aria-label="Menu">
+                        <IconButton className={classes.menuButton} onClick={this.toggleDrawer(true)} color="primary" aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
                         <SwipeableDrawer
@@ -132,7 +132,7 @@ class ButtonAppBar extends React.Component {
                         </SwipeableDrawer>
                         <Typography
                             variant="h6"
-                            color="inherit"
+                            color="primary"
                             className={classes.grow}
                             onClick={this.handleToHome}
                         >
@@ -140,7 +140,7 @@ class ButtonAppBar extends React.Component {
                         </Typography>
                         {!user ? (
                         <Button
-                            color="inherit"
+                            color="primary"
                             onClick={this.handleToLoginPage}
                         >
                             ログイン
@@ -151,7 +151,7 @@ class ButtonAppBar extends React.Component {
                             aria-owns={open ? 'menu-appbar' : undefined}
                             aria-haspopup="true"
                             onClick={this.handleMenu}
-                            color="inherit"
+                            color="primary"
                             >
                             <AccountCircle />
                             </IconButton>
