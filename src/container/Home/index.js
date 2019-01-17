@@ -185,8 +185,6 @@ class Home extends React.Component {
           <SwipeableViews
             enableMouseEvents
             index={activeStep}
-            style={classes.slideRoot}
-            slideStyle={classes.slideContainer}
             onChangeIndex={this.handleStepChange}
           >
             <div className={classes.slider}>
