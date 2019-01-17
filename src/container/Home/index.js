@@ -35,7 +35,7 @@ const styles = theme => ({
       maxHeight: 400,
     },
     objectFit: 'cover',
-    objectPosition: '0% 0%'
+    objectPosition: '0% 30%'
   },
   imgIntro: {
     marginTop: theme.spacing.unit * 2,
