@@ -14,6 +14,9 @@ import { withStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import headImage from './header.jpg';
 import logo from "./logo.png";
+import mock1 from './mock1.png';
+import mock2 from './mock2.png';
+import mock3 from './mock3.png';
 
 const styles = theme => ({
   root: {
@@ -32,10 +35,9 @@ const styles = theme => ({
       maxHeight: 400,
     },
     objectFit: 'cover',
-    objectPosition: '0% 0%'
+    objectPosition: '0% 30%'
   },
   imgIntro: {
-    width: "100%",
     marginTop: theme.spacing.unit * 2,
     [theme.breakpoints.down('md')]:{
       maxHeight: 200,
@@ -90,6 +92,7 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     paddingTop: theme.spacing.unit * 2,
+    padding: 15,
     minHeight: 100,
     backgroundColor: theme.palette.grey[100]
   },
@@ -99,7 +102,13 @@ const styles = theme => ({
     display:'flex',
     justifyContent:'center',
     backgroundColor: theme.palette.grey[100]
-  }
+  },
+  slideRoot:{
+    padding: '0 30px',
+  },
+  slideContainer: {
+    padding: '0 10px',
+  },
 });
 
 class Home extends React.Component {
@@ -182,19 +191,19 @@ class Home extends React.Component {
               <Typography align='center' variant='subtitle2' gutterBottom>
               まずは気になった人を見つけましょう
               </Typography>
-              <img className={classes.imgIntro} src={headImage} alt="" />
+              <img className={classes.imgIntro} src={mock1} alt="" />
             </div>
             <div className={classes.slider}>
               <Typography align='center' variant='subtitle2' gutterBottom>
                 条件を確認して呼んでみましょう
               </Typography>
-              <img className={classes.imgIntro} src={headImage} alt="" />
+              <img className={classes.imgIntro} src={mock2} alt="" />
             </div>
             <div className={classes.slider}>
               <Typography align='center' variant='subtitle2' gutterBottom>
                 地図で場所を確認して会いましょう
               </Typography>
-              <img className={classes.imgIntro} src={headImage} alt="" />
+              <img className={classes.imgIntro} src={mock3} alt="" />
             </div>
           </SwipeableViews>
         </div>
