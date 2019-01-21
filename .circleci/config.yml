@@ -48,10 +48,11 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - deploy-staging:
       - deploy-production:
-          requires:
-            - deploy-staging
           filters:
             branches:
               only: master
+      - deploy-staging:
+          filters:
+            branches:
+              ignore: master
