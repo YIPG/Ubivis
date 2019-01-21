@@ -53,5 +53,3 @@ workflows:
             branches:
               only: master
       - deploy-staging:
-          filters:
-            branches:
