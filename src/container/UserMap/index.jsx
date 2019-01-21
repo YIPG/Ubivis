@@ -145,7 +145,6 @@ class UserMapContent extends React.Component {
                 .setIn(['sources', 'drone'], fromJS({type: 'geojson'}))
                 .set('layers', mapStyle.get('layers').push(pointLayer))
         }
-        console.log(latitude, longitude)
         mapStyle = mapStyle.setIn(['sources', 'drone', 'data'], {
             type: 'Point',
             coordinates: [
