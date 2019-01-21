@@ -25,7 +25,7 @@ const Routes = () => {
                     <Route exact path='/' component={Home} />
                     <Route path='/login' component={LoginForm} />
                     <PrivateRoute path='/welcome' component={WelcomeScreen} />
-                    <Route path='/map' component={UserMap} />
+                    <PrivateRoute path='/map' component={UserMap} />
                     <Route path='/workermap' component={WorkerMap} />
                     <PrivateRoute path='/main' component={Main} />
                     <PrivateRoute path='/mypage' component={Mypage} />
