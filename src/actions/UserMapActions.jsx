@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import {
     LOCATE_USER,
     ON_VIEWPORT_CHANGE,
+    CHANGE_VIEWPORT
 } from './types';
 import geohash from 'ngeohash';
 
@@ -49,5 +50,14 @@ export const on_viewport_change = ({viewport}) => {
     return {
         type: ON_VIEWPORT_CHANGE,
         payload: viewport
+    }
+}
+
+export const changeViewport = (lat, long, zoom) => {
+    return {
+        type: CHANGE_VIEWPORT,
+        latitude: lat,
+        longitude: long,
+        zoom: zoom
     }
 }
