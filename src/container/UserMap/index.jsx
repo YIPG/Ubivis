@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactMapGL, { Marker } from 'react-map-gl';
+import axios from "axios";
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Pin from './pin';
@@ -8,6 +9,7 @@ import mapboxConfig from '../../Mapbox/config';
 import { locate_user, on_viewport_change, finishTargetTracking } from '../../actions';
 import {defaultMapStyle, pointLayer} from './mapstyle';
 import {fromJS} from "immutable";
+import PolylineOverlay from './line';
 
 const styles = theme => ({
     buttonWrap: {
@@ -25,7 +27,8 @@ class UserMapContent extends React.Component {
         super();
         this.state = {
             loading: false,
-            mapStyle: defaultMapStyle
+            mapStyle: defaultMapStyle,
+            points:[]
         }
     }
 
@@ -148,6 +151,27 @@ class UserMapContent extends React.Component {
         this.props.finishTargetTracking()
     }
 
+    getRoute = () => {
+        const {latitude, longitude} = this.props.map.marker;
+
+        console.log(mapboxConfig)
+
+        axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${this.props.main.longitude},${this.props.main.latitude};${longitude},${latitude}`, {
+            params: {
+                geometries: 'geojson',
+                access_token: mapboxConfig
+            }
+        })
+        .then(res => {
+            console.log(res.data.routes[0].geometry.coordinates, "ルート表示成功")
+            this.setState({
+                points: res.data.routes[0].geometry.coordinates
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
+
     render() {
         const { classes, on_viewport_change, map } = this.props;
         return(
@@ -165,10 +189,12 @@ class UserMapContent extends React.Component {
                     >
                         <Pin size={20} />
                     </Marker>
+                    <PolylineOverlay points={this.state.points} />
                 </ReactMapGL>
                 <div className={classes.buttonWrap}>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>現在地を取得</Button>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRocket}>ユーザー表示！</Button>
+                    <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRoute}>ルート表示！</Button>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.finishTracking}>トラッキング終了</Button>
                 </div>
             </div>
