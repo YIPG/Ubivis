@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import Button from '@material-ui/core/Button';
@@ -12,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
+import history from '../../Route/history';
 import headImage from './header.jpg';
 import logo from "./logo.png";
 import mock1 from './mock1.png';
@@ -144,11 +144,10 @@ class Home extends React.Component {
         </div>
         <div className={classes.root}>
           <Dialog open={open} onClose={this.handleClose}>
-            <DialogTitle>大方は完成してます</DialogTitle>
+            <DialogTitle>現在実装中です</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                  <div><Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>ログインページ</Link>や
-                  <Link to='/welcome' style={{ textDecoration: 'none', color: 'black' }}>ウェルカム画面</Link>、<Link to='/map' style={{ textDecoration: 'none', color: 'black' }}>地図</Link>などにとんでみてください.</div>
+                  <div>すみません、本番環境では電話番号認証を必須条件とする予定です。</div>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -163,7 +162,7 @@ class Home extends React.Component {
           <Typography variant="caption" gutterBottom>
             イイネ、メッセージ一切不要
           </Typography>
-          <Fab variant="extended" className={classes.signInButton} onClick={this.handleClick}>
+          <Fab variant="extended" className={classes.signInButton} onClick={()=>history.push('/login')}>
             メールで登録
           </Fab>
           <Fab variant="extended" className={classes.phoneSignInButton} onClick={this.handleClick}>

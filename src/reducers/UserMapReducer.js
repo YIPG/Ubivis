@@ -1,6 +1,7 @@
 import {
     LOCATE_USER,
     ON_VIEWPORT_CHANGE,
+    CHANGE_VIEWPORT
 } from '../actions/types';
 import {FlyToInterpolator} from 'react-map-gl';
 
@@ -20,6 +21,15 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case CHANGE_VIEWPORT:
+            return { ...state, viewport:{
+                ...state.viewport,
+                latitude: action.latitude,
+                longitude: action.longitude,
+                zoom: action.zoom,
+                transitionInterpolator: new FlyToInterpolator(),
+                transitionDuration: 1500
+            }}
         case LOCATE_USER:
             return { ...state, viewport: {
                 ...state.viewport,

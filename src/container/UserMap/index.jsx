@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactMapGL, { Marker } from 'react-map-gl';
+import axios from "axios";
 import {withStyles} from '@material-ui/core/styles';
+import SnackBar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Pin from './pin';
 import mapboxConfig from '../../Mapbox/config';
-import { locate_user, on_viewport_change, finishTargetTracking } from '../../actions';
+import { locate_user, on_viewport_change, finishTargetTracking, changeViewport } from '../../actions';
 import {defaultMapStyle, pointLayer} from './mapstyle';
 import {fromJS} from "immutable";
+import PolylineOverlay from './line';
 
 const styles = theme => ({
     buttonWrap: {
@@ -17,7 +22,10 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit * 2,
-    }
+    },
+    close: {
+        padding: theme.spacing.unit / 2,
+    },
 })
 
 class UserMapContent extends React.Component {
@@ -25,7 +33,10 @@ class UserMapContent extends React.Component {
         super();
         this.state = {
             loading: false,
-            mapStyle: defaultMapStyle
+            mapStyle: defaultMapStyle,
+            points:[],
+            open: false,
+            duration: null
         }
     }
 
@@ -127,12 +138,13 @@ class UserMapContent extends React.Component {
         let {mapStyle} = this.state;
         let {latitude, longitude} = this.props.main;
 
+        this.props.changeViewport(latitude, longitude, 13);
+
         if(!mapStyle.hasIn(['sources', 'drone'])) {
             mapStyle=mapStyle
                 .setIn(['sources', 'drone'], fromJS({type: 'geojson'}))
                 .set('layers', mapStyle.get('layers').push(pointLayer))
         }
-        console.log(latitude, longitude)
         mapStyle = mapStyle.setIn(['sources', 'drone', 'data'], {
             type: 'Point',
             coordinates: [
@@ -148,29 +160,106 @@ class UserMapContent extends React.Component {
         this.props.finishTargetTracking()
     }
 
+    getRoute = () => {
+        const {latitude, longitude} = this.props.map.marker;
+
+        this.props.changeViewport((latitude+this.props.main.latitude)/2, (longitude+this.props.main.longitude)/2, 11);
+
+        axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${this.props.main.longitude},${this.props.main.latitude};${longitude},${latitude}`, {
+            params: {
+                geometries: 'geojson',
+                access_token: mapboxConfig
+            }
+        })
+        .then(res => {
+            this.setState({
+                points: res.data.routes[0].geometry.coordinates,
+                duration: res.data.routes[0].duration,
+                open:true
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
+    // _renderPopup(){
+    //     const {popupInfo, duration} = this.state;
+    //     const {latitude, longitude} = this.props.map.marker;
+
+    //     console.log(popupInfo, duration)
+
+    //     return popupInfo && duration && (
+    //         <Popup tipSize={4}
+    //           anchor="top"
+    //           longitude={longitude}
+    //           latitude={latitude}
+    //           closeOnClick={false}
+    //           onClose={() => this.setState({popupInfo: false})} >
+    //             <PopupText duration={duration} />
+    //         </Popup>
+    //       );
+    // }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ open: false });
+    };
+
     render() {
         const { classes, on_viewport_change, map } = this.props;
         return(
             <div>
-                <ReactMapGL
-                    {...map.viewport}
-                    width="100%"
-                    mapStyle={this.state.mapStyle}
-                    onViewportChange={(viewport) => on_viewport_change({viewport})}
-                    mapboxApiAccessToken={mapboxConfig}
-                >
-                    <Marker
-                        latitude={map.marker.latitude}
-                        longitude={map.marker.longitude}    
+                <div>
+                    <ReactMapGL
+                        {...map.viewport}
+                        width="100%"
+                        mapStyle={this.state.mapStyle}
+                        onViewportChange={(viewport) => on_viewport_change({viewport})}
+                        mapboxApiAccessToken={mapboxConfig}
                     >
-                        <Pin size={20} />
-                    </Marker>
-                </ReactMapGL>
+                        <Marker
+                            latitude={map.marker.latitude}
+                            longitude={map.marker.longitude}
+                        >
+                            <Pin size={20} />
+                        </Marker>
+                        {/* {this._renderPopup()} */}
+                        <PolylineOverlay points={this.state.points} />
+                    </ReactMapGL>
+                </div>
                 <div className={classes.buttonWrap}>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.handleClick}>現在地を取得</Button>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRocket}>ユーザー表示！</Button>
+                    <Button className={classes.button} variant="outlined" color="secondary" onClick={this.getRoute}>ルート表示！</Button>
                     <Button className={classes.button} variant="outlined" color="secondary" onClick={this.finishTracking}>トラッキング終了</Button>
                 </div>
+
+                <SnackBar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                    }} 
+                    open={this.state.open}
+                    autoHideDuration={10000}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">到着まであと{this.state.duration && Math.floor(this.state.duration / 60)}分です</span>}
+                    action={[
+                        <IconButton
+                          key="close"
+                          aria-label="Close"
+                          color="inherit"
+                          className={classes.close}
+                          onClick={this.handleClose}
+                        >
+                          <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
             </div>
         );
     }
@@ -183,7 +272,8 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, { 
     locate_user,
     on_viewport_change,
-    finishTargetTracking
+    finishTargetTracking,
+    changeViewport
 })(
     withStyles(styles)(UserMapContent)
 );
