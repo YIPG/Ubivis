@@ -89,6 +89,10 @@ class ButtonAppBar extends React.Component {
         });
       };
 
+    renderIcon = () => {
+
+    }
+
     render() {
         const { classes, user } = this.props;
         const { anchorEl } = this.state;
@@ -138,41 +142,41 @@ class ButtonAppBar extends React.Component {
                         >
                             Ubivis
                         </Typography>
-                        {!user ? (
+                        {user!==null&&user.emailVerified ? (
+                            <div>
+                                <IconButton
+                                aria-owns={open ? 'menu-appbar' : undefined}
+                                aria-haspopup="true"
+                                onClick={this.handleMenu}
+                                color="primary"
+                                >
+                                <AccountCircle />
+                                </IconButton>
+                                <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={this.handleClose}
+                                >
+                                <MenuItem onClick={this.handleToProfile}>プロフィール</MenuItem>
+                                <MenuItem onClick={this.handleToLogout}>ログアウト</MenuItem>
+                                </Menu>
+                            </div>
+                        ): (
                         <Button
                             color="primary"
                             onClick={this.handleToLoginPage}
                         >
                             ログイン
                         </Button>
-                        ): (
-                        <div>
-                            <IconButton
-                            aria-owns={open ? 'menu-appbar' : undefined}
-                            aria-haspopup="true"
-                            onClick={this.handleMenu}
-                            color="primary"
-                            >
-                            <AccountCircle />
-                            </IconButton>
-                            <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={this.handleClose}
-                            >
-                            <MenuItem onClick={this.handleToProfile}>プロフィール</MenuItem>
-                            <MenuItem onClick={this.handleToLogout}>ログアウト</MenuItem>
-                            </Menu>
-                        </div>
                         )}
                         
                     </Toolbar>

@@ -16,11 +16,21 @@ import Header from '../container/Header';
 import history from './history';
 import PrivateRoute from './PrivateRoute';
 
+const headerPathList=[
+    "login",
+    "map",
+    "workermap",
+    "main",
+    "mypage",
+]
+
+const headerPathStr = `/:content(${headerPathList.join('|')})`;
+
 const Routes = () => {
     return (
         <Router history={history}>
             <div>
-                <Header />
+                <Route path={headerPathStr} component={Header} />
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/login' component={LoginForm} />
