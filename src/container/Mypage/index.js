@@ -57,7 +57,8 @@ const styles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // width: 160,
+        objectFit: 'contain',
+        width: 160,
         height: 160,
     },
     icon: {

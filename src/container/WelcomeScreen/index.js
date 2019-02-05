@@ -136,7 +136,7 @@ class WelcomeScreen extends React.Component {
 
 
     handleJump = () => {
-      history.push('/');
+      history.push('/main');
     };
   
     isStepSkipped(step) {

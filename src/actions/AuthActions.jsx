@@ -110,7 +110,7 @@ const loginUserSuccess = (dispatch, user) => {
     console.log(firebase.auth().currentUser.emailVerified)
 
     if(firebase.auth().currentUser.emailVerified){
-        history.push('/welcome')
+        history.push('/main')
     } else {
         console.log("メール認証されてません！")
         firebase.auth().currentUser.sendEmailVerification(actinoCodeSettings)

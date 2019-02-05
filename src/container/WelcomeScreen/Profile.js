@@ -44,10 +44,11 @@ const styles = theme => ({
     },
     imageZone : {
         display: 'flex',
+        objectFit: 'contain',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // width: 160,
+        width: 160,
         height: 160,
     },
     icon: {
