@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/YIPG/pre-ubivis.svg?style=svg&circle-token=8396dc50fbebb92fa359a4a35fd5453121a80325)](https://circleci.com/gh/YIPG/pre-ubivis)
+[![CircleCI](https://circleci.com/gh/YIPG/ubivis.svg?style=svg)](https://circleci.com/gh/YIPG/ubivis)
 
 # [Ubivis](https://ubivis.tokyo/)
 <img src="https://user-images.githubusercontent.com/19145527/53814332-c5f60f80-3fa2-11e9-95d0-e77ff644a84f.png" width="100%" >
